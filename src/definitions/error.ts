@@ -1,6 +1,6 @@
-import {getDeclaration, getSignature} from '.';
+import {getDeclaration, getPush, getSignature} from './symbols';
 
-class CustomError {
+export class Error {
   /** Custom error name. */
   readonly name: string;
 
@@ -12,7 +12,7 @@ class CustomError {
     return `#define error ${this.name}(TODO TODO)`;
   }
 
-  [getSignature](): string {
+  [getPush](): string {
     return `_ERROR(${this.name})`;
   }
 }

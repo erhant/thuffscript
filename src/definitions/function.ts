@@ -1,17 +1,23 @@
-import {getDeclaration, getSignature} from '.';
+import {getDeclaration, getPush, getSignature} from './symbols';
+import {Primitive} from '../types';
 
 /** A function interface. */
 export class Function {
   /** Function name. */
   readonly name: string;
   /** Function argument types. */
-  readonly args: string[]; // TODO
+  readonly args: Primitive[];
   /** Function type. */
-  readonly type: string | null; // TODO
+  readonly type: 'view' | 'payable' | 'pure' | 'nonpayable' | null; // TODO
   /** Function return types. */
-  readonly returns: string[];
+  readonly returns: Primitive[];
 
-  constructor(ops: {name: string; args?: string[]; type?: string; returns?: string[]}) {
+  constructor(ops: {
+    name: string;
+    args?: Primitive[];
+    returns?: Primitive[];
+    type?: 'view' | 'payable' | 'pure' | 'nonpayable';
+  }) {
     this.name = ops.name;
     this.args = ops.args || [];
     this.type = ops.type || null;
@@ -19,15 +25,12 @@ export class Function {
   }
 
   [getDeclaration](): string {
-    let decl = [`#define function ${this.name}(${this.args.join(', ')})`];
-
-    if (this.type) decl.push(this.type);
-    if (this.returns.length > 0) decl.push(`(${this.returns.join(', ')})`);
-
-    return decl.join(' ');
+    return `#define function ${this.name}(${this.args.join(', ')}) ${
+      this.type ? this.type + ' ' : ''
+    }returns(${this.returns.join(', ')})`;
   }
 
-  [getSignature](): string {
+  [getPush](): string {
     return `__FUNC_SIG(${this.name})`;
   }
 }

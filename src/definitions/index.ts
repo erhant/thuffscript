@@ -1,8 +1,6 @@
-/** Return the declaration string of the object. */
-export const getDeclaration = Symbol('Declaration');
-
-/** Return the command to get the signature / hash of the object. */
-export const getSignature = Symbol('Signature');
-
-/** Return the string to push to stack. */
-export const getPush = Symbol('Push');
+export * from './constant';
+export * from './error';
+export * from './function';
+export * from './label';
+export * from './macro';
+export * from './event';

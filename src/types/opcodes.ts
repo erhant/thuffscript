@@ -1,9 +1,6 @@
-// number shorthands
-type u2 = 1 | 2 | 3 | 4;
-type u4 = u2 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
-type u5 = u4 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32;
-
 // Challenge: shortest way to represent the opcodes in type system?
+
+import {u2, u4, u5} from './util';
 
 /** All EVM [opcodes](https://www.evm.codes/), Shanghai version. */
 // prettier-ignore

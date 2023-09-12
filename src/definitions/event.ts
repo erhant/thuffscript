@@ -1,13 +1,14 @@
-import {getDeclaration, getSignature} from '.';
+import {getDeclaration, getPush, getSignature} from './symbols';
+import {Primitive} from '../types';
 
 /** An event interface. */
-class Event {
+export class Event {
   /** Event name. */
   readonly name: string;
   /** Event topic types. */
-  readonly topics: (string | [string, true])[]; // TODO typesafe
+  readonly topics: (Primitive | `${Primitive} indexed`)[]; // TODO typesafe
 
-  constructor(name: string, topics: (string | [string, true])[] = []) {
+  constructor(name: string, topics: (Primitive | `${Primitive} indexed`)[] = []) {
     this.name = name;
     this.topics = topics;
   }
@@ -18,7 +19,7 @@ class Event {
       .join(', ')})`;
   }
 
-  [getSignature](): string {
+  [getPush](): string {
     return `__EVENT_HASH(${this.name})`;
   }
 }
