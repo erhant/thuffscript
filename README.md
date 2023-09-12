@@ -1,6 +1,6 @@
 # `thuff`
 
-Write, test, and deploy Huff; without every leaving TypeScript.
+Write, test, and deploy Huff; without ever leaving TypeScript.
 
 To install dependencies:
 
@@ -35,13 +35,10 @@ Here is a Huff code (from Huff [docs](https://docs.huff.sh/tutorial/the-basics/#
 }
 
 #define macro MAIN() = takes(0) returns(0) {
-    // Get the function selector
-    0x00
-    calldataload
-    0xE0
-    shr
+    // get the function selector
+    0x00 calldataload 0xE0 shr
 
-    // Jump to the implementation of the ADD_TWO function if the calldata matches the function selector
+    // jump to the implementation of the ADD_TWO function if the calldata matches the function selector
     __FUNC_SIG(addTwo) eq addTwo jumpi
 
     addTwo:

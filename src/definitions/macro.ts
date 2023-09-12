@@ -1,20 +1,30 @@
 import {getDeclaration} from './symbols';
-import type {Literal, Op, Primitive} from '../types';
+import type {Literal, Op} from '../types';
 import {Constant} from './constant';
 import {Event} from './event';
 import {Function} from './function';
 import {Label} from '.';
 
-type Code = Literal | Op | Constant | Function | Event | Macro | Label['src'] | Label['dest'];
-type Codes = (Code | Code[])[];
+type Code<A extends string | never = never> =
+  | `<${A}>`
+  | Literal
+  | Op
+  | Constant
+  | Function
+  | Event
+  | Macro<string | never>
+  | Label['src']
+  | Label['dest'];
+type Codes<A extends string | never = never> = (Code<A> | Code<A>[])[];
+
 /**
  * A Huff macro.
  */
-export class Macro {
+export class Macro<A extends string | never = never> {
   /** Macro name. */
   readonly name: string;
   /** Arguments macro. */
-  readonly args: Primitive[];
+  readonly args: A[];
   /** Number of stack items popped. */
   readonly takes: number;
   /** Number of stack items pushed. */
@@ -22,7 +32,7 @@ export class Macro {
   /** Type of this macro. */
   readonly type: 'fn' | 'macro';
 
-  constructor(params: {name: string; args?: Primitive[]; takes?: number; returns?: number; fn?: true}, ...ops: Codes) {
+  constructor(params: {name: string; args?: A[]; takes?: number; returns?: number; fn?: true}, ...ops: Codes<A>) {
     this.name = params.name;
     this.args = params.args || [];
     this.takes = params.takes || 0;
@@ -39,7 +49,7 @@ export class Macro {
     return `#define ${this.type}(${this.args.join(', ')})`; // TODO
   }
 
-  codesize(): string {
+  get codesize(): string {
     return `__codesize(${this.name})`;
   }
 }
