@@ -7,8 +7,9 @@ type SinglePrimitive =
   // int & uint
   | `${'' | 'u'}int${'' | _8_256}`
   // address
-  | `address${'' | ' payable'}` // TODO: is it ok to do payable like this
+  | 'address'
+  | 'address payable' // TODO: is it ok to do payable like this?
   // bytes
   | `bytes${u5 | ''}`;
 
-export type Primitive = SinglePrimitive | `${SinglePrimitive}[]` | `${SinglePrimitive}[${bigint}]`;
+export type Primitive = SinglePrimitive | `${SinglePrimitive}[${bigint | ''}]`;

@@ -1,4 +1,6 @@
-# `thuff`
+# `thuffs`
+
+<img src="https://img.shields.io/badge/%E2%99%A5-14151B?logo=bun&logoColor=white" alt="bun love"/>
 
 Write, test, and deploy Huff; without ever leaving TypeScript.
 
@@ -13,10 +15,6 @@ To run:
 ```bash
 bun run index.ts
 ```
-
-This project was created using `bun init` in bun v1.0.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
-
-USE SYMBOLS TO GET THE HUFF CODE OF A DEFINITION
 
 ## Usage
 

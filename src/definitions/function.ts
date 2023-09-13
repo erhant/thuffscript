@@ -12,16 +12,18 @@ export class Function {
   /** Function return types. */
   readonly returns: Primitive[];
 
-  constructor(ops: {
-    name: string;
-    args?: Primitive[];
-    returns?: Primitive[];
-    type?: 'view' | 'payable' | 'pure' | 'nonpayable';
-  }) {
-    this.name = ops.name;
-    this.args = ops.args || [];
-    this.type = ops.type || null;
-    this.returns = ops.returns || [];
+  constructor(
+    name: string,
+    params: {
+      args?: Primitive[];
+      returns?: Primitive[];
+      type?: 'view' | 'payable' | 'pure' | 'nonpayable';
+    }
+  ) {
+    this.name = name;
+    this.args = params.args || [];
+    this.type = params.type || null;
+    this.returns = params.returns || [];
   }
 
   [getDeclaration](): string {

@@ -5,14 +5,14 @@ import {Event} from './event';
 import {Function} from './function';
 import {Label} from '.';
 
-type Code<A extends string | never = never> =
+type Code<A extends string | never = string | never> =
   | `<${A}>`
   | Literal
   | Op
   | Constant
   | Function
   | Event
-  | Macro<string | never>
+  | Macro
   | Label['src']
   | Label['dest'];
 type Codes<A extends string | never = never> = (Code<A> | Code<A>[])[];
@@ -20,7 +20,7 @@ type Codes<A extends string | never = never> = (Code<A> | Code<A>[])[];
 /**
  * A Huff macro.
  */
-export class Macro<A extends string | never = never> {
+export class Macro<A extends string | never = string | never> {
   /** Macro name. */
   readonly name: string;
   /** Arguments macro. */
@@ -29,11 +29,11 @@ export class Macro<A extends string | never = never> {
   readonly takes: number;
   /** Number of stack items pushed. */
   readonly returns: number;
-  /** Type of this macro. */
+  /** Is this a `macro` or a function `fn`? */
   readonly type: 'fn' | 'macro';
 
-  constructor(params: {name: string; args?: A[]; takes?: number; returns?: number; fn?: true}, ...ops: Codes<A>) {
-    this.name = params.name;
+  constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true}, ...ops: Codes<A>) {
+    this.name = name;
     this.args = params.args || [];
     this.takes = params.takes || 0;
     this.returns = params.returns || 0;
@@ -57,12 +57,12 @@ export class Macro<A extends string | never = never> {
 // TODO: export Fn, Constructor, and Main macros
 export class Main extends Macro {
   constructor(...ops: Codes) {
-    super({name: 'MAIN'}, ...ops);
+    super('MAIN', {}, ...ops);
   }
 }
 
 export class Constructor extends Macro {
   constructor(...ops: Codes) {
-    super({name: 'CONSTRUCTOR'}, ...ops);
+    super('CONSTRUCTOR', {}, ...ops);
   }
 }

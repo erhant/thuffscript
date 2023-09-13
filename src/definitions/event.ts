@@ -6,7 +6,7 @@ export class Event {
   /** Event name. */
   readonly name: string;
   /** Event topic types. */
-  readonly topics: (Primitive | `${Primitive} indexed`)[]; // TODO typesafe
+  readonly topics: (Primitive | `${Primitive} indexed`)[];
 
   constructor(name: string, topics: (Primitive | `${Primitive} indexed`)[] = []) {
     this.name = name;

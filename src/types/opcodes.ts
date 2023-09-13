@@ -24,7 +24,7 @@ export type Op =
 // Code, Extcode and Returndata
 `${'CODE' | 'EXTCODE' | 'RETURNDATA'}${'SIZE' | 'COPY'}` |
 // Hash
-`${'EXTCODE' | 'BLOCK'}HASH` |
+'EXTCODEHASH' | 'BLOCKHASH' |
 // Block stuff
 'COINBASE' | 'TIMESTAMP' | 'NUMBER' | 'PREVRANDAO' | 'GASLIMIT' | 'CHAINID' |
 // Self balance
@@ -34,9 +34,9 @@ export type Op =
 // Pop
 'POP' |
 // Load and store
-`${'S' | 'M'}${'LOAD' | 'STORE'}` | `MSTORE8` |
+`${'S'|'M'}${'LOAD' | 'STORE'}` | `MSTORE8` |
 // Jumps, PC, MSIZE and GAS
-`JUMP${'' | 'I' | 'DEST'}` | 'PC' | 'MSIZE' | 'GAS' |
+`JUMP${''|'I'|'DEST'}` | 'PC' | 'MSIZE' | 'GAS' |
 // Push, Dup and Swap
 `PUSH${u5 | 0}` | `DUP${u4}` | `SWAP${u4}` |
 // Log
