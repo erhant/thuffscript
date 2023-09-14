@@ -31,7 +31,7 @@ export class Program {
   }
 
   // compiles the program
-  compile(): string {
+  compile(): string[][] {
     return this.main.compile();
   }
 }

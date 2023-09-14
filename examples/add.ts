@@ -8,7 +8,7 @@ const addConstant = new Macro('ADD_CONSTANT', {args: ['constant'], takes: 1}).bo
 
   [0b00, 'MSTORE'], // place the result in memory
   [0x20, 0o00, 'RETURN'] // return the result
-);
+).callable;
 
 const main = new Main(
   [0x00, 'CALLDATALOAD', 0xe0, 'SHR'], // get function selector

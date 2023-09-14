@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'bun:test';
-import {Event, Label, declare, define} from '../src/definitions';
+import {Label} from '../src/definitions';
 
 describe('jump labels', () => {
   it('foobar', () => {
