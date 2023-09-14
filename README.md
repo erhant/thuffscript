@@ -38,7 +38,7 @@ Thuffs exposes classes for all Huff constructs:
 - `Main` and `Constructor` macros
 - `Table` (todo)
 
-> ![NOTE]
+> [!NOTE]
 >
 > **Thuffs is not a tool to test or deploy Huff contracts**! You should simply use this to write & compile to Huff; the tests can be done via Foundry or Hardhat as is the case usually.
 

@@ -1,6 +1,5 @@
 import {declare, define} from './symbols';
-import {Literal} from '../types';
-import {Huffable} from '../types/huffable';
+import type {Huffable, Literal} from '../types';
 
 export class Constant implements Huffable {
   readonly name: string;
@@ -14,7 +13,7 @@ export class Constant implements Huffable {
 
   [declare]() {
     this.isDeclared = true;
-    return `#define constant ${this.name} = ${this.value}`;
+    return `#define constant ${this.name} = 0x${this.value.toString(16)}`;
   }
 
   [define]() {

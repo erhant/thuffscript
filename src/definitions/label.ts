@@ -15,6 +15,6 @@ export class Label {
 
   dest(): string {
     this.isDestPlaced = true;
-    return this.name + ': ';
+    return this.name + ':';
   }
 }

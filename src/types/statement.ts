@@ -1,8 +1,8 @@
 import type {Op} from '.';
 import type {Constant, Event, Function, Label, MacroCall, CustomError, Macro} from '../definitions';
 
-/** A literal number, preferably a hexadecimal. */
-export type Literal = bigint | number;
+/** A literal, usually a hexadecimal. */
+export type Literal = bigint | number | 'FREE_STORAGE_POINTER()';
 
 export type Statement<Arg extends string | never> =
   // evm opcodes

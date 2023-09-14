@@ -1,6 +1,5 @@
-import {Primitive} from '../types';
-import {Huffable} from '../types/huffable';
 import {declare, define} from './symbols';
+import type {Huffable, Primitive} from '../types';
 
 export class CustomError implements Huffable {
   readonly name: string;
@@ -18,6 +17,6 @@ export class CustomError implements Huffable {
   }
 
   [define](): string {
-    return `_ERROR(${this.name})`;
+    return `__ERROR(${this.name})`;
   }
 }

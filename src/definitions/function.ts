@@ -28,7 +28,7 @@ export class Function implements Huffable {
     this.isDeclared = true;
     return `#define function ${this.name}(${this.args.join(', ')}) ${
       this.type ? this.type + ' ' : ''
-    }returns(${this.returns.join(', ')})`;
+    }returns (${this.returns.join(', ')})`;
   }
 
   [define](): string {

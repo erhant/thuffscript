@@ -1,6 +1,5 @@
 import {declare, define} from './symbols';
-import {Statement} from '../types/statement';
-import {Literal} from '../types';
+import type {Statement, Literal} from '../types';
 
 export class MacroCall {
   constructor(readonly args: {[x: string]: Literal}, readonly macro: Macro) {}
@@ -61,6 +60,8 @@ export class Macro<A extends string | never = string | never> {
 
   compile(): string {
     // TODO
+    // first levels are joined by newline
+    // second levels are joined by space
     return '';
   }
 }
