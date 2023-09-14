@@ -1,5 +1,5 @@
-/** Return the declaration string of the object. */
+/** Return the declaration string of the object for Huff. */
 export const declare = Symbol('Declaration');
 
-/** Return the command to parse the object for Huff. */
-export const parse = Symbol('Parse');
+/** Return the definition of the object for Huff. */
+export const define = Symbol('Define');

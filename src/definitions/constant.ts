@@ -1,12 +1,11 @@
-import {declare, parse} from './symbols';
+import {declare, define} from './symbols';
 import {Literal} from '../types';
 import {Huffable} from '../types/huffable';
 
 export class Constant implements Huffable {
-  /** Custom error name. */
   readonly name: string;
-  /** Value of this constant. */
   readonly value: Literal;
+  isDeclared = false;
 
   constructor(name: string, value: Literal) {
     this.name = name;
@@ -14,10 +13,11 @@ export class Constant implements Huffable {
   }
 
   [declare]() {
+    this.isDeclared = true;
     return `#define constant ${this.name} = ${this.value}`;
   }
 
-  [parse]() {
+  [define]() {
     return `[${this.name}]`;
   }
 }

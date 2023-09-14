@@ -1,12 +1,11 @@
 import {Primitive} from '../types';
 import {Huffable} from '../types/huffable';
-import {declare, parse} from './symbols';
+import {declare, define} from './symbols';
 
-export class Error implements Huffable {
-  /** Custom error name. */
+export class CustomError implements Huffable {
   readonly name: string;
-  /** Error arguments. */
   readonly args: Primitive[];
+  isDeclared = false;
 
   constructor(name: string, args: Primitive[] = []) {
     this.name = name;
@@ -14,10 +13,11 @@ export class Error implements Huffable {
   }
 
   [declare](): string {
+    this.isDeclared = true;
     return `#define error ${this.name}(${this.args.join(', ')})`;
   }
 
-  [parse](): string {
+  [define](): string {
     return `_ERROR(${this.name})`;
   }
 }

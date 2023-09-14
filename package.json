@@ -1,7 +1,12 @@
 {
-  "name": "typehuff",
-  "module": "src/index.ts",
+  "name": "thuffs",
+  "author": "erhant",
   "type": "module",
+  "module": "src/index.ts",
+  "scripts": {
+    "example": "bun run ./examples/add.ts",
+    "build": "bun build ./src/index.ts --outdir ./build"
+  },
   "devDependencies": {
     "bun-types": "latest"
   },

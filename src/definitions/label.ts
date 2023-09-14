@@ -2,19 +2,19 @@
  * A jump label.
  */
 export class Label {
-  /** label name. */
   readonly name: string;
+  isDestPlaced = false;
 
   constructor(name: string) {
     this.name = name;
   }
 
-  // these should return JumpSrc and JumpDest types, not assignable to strings
   src(): string {
     return this.name;
   }
 
   dest(): string {
+    this.isDestPlaced = true;
     return this.name + ': ';
   }
 }

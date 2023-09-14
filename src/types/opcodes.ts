@@ -1,6 +1,4 @@
-// Challenge: shortest way to represent the opcodes in type system?
-
-import {u2, u4, u5} from './util';
+import type {_1_16, _1_32, _1_4} from './util';
 
 /** All EVM [opcodes](https://www.evm.codes/), Shanghai version. */
 // prettier-ignore
@@ -38,10 +36,12 @@ export type Op =
 // Jumps, PC, MSIZE and GAS
 `JUMP${''|'I'|'DEST'}` | 'PC' | 'MSIZE' | 'GAS' |
 // Push, Dup and Swap
-`PUSH${u5 | 0}` | `DUP${u4}` | `SWAP${u4}` |
+`PUSH${_1_32 | 0}` | `DUP${_1_16}` | `SWAP${_1_16}` |
 // Log
-`LOG${u2 | 0}` |
+`LOG${_1_4 | 0}` |
 // Creates and calls
 `CREATE${'' | '2'}` | `${'' | 'DELEGATE' | 'STATIC'}CALL` | 'CALLCODE' | 
 // Terminations
 'RETURN' | 'REVERT' | 'INVALID' | 'SELFDESTRUCT';
+
+// Challenge: shortest way to represent the opcodes in type system?

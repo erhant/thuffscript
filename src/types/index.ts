@@ -1,4 +1,4 @@
 export * from './opcodes';
 export * from './primitives';
-
-export type Literal = bigint | number | boolean;
+export * from './huffable';
+export * from './statement';

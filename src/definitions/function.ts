@@ -1,17 +1,14 @@
-import {declare, parse} from './symbols';
+import {declare, define} from './symbols';
 import {Primitive} from '../types';
 import {Huffable} from '../types/huffable';
 
 /** A function interface. */
 export class Function implements Huffable {
-  /** Function name. */
   readonly name: string;
-  /** Function argument types. */
   readonly args: Primitive[];
-  /** Function type. */
-  readonly type: 'view' | 'payable' | 'pure' | 'nonpayable' | null; // TODO
-  /** Function return types. */
   readonly returns: Primitive[];
+  readonly type: 'view' | 'payable' | 'pure' | 'nonpayable' | null;
+  isDeclared = false;
 
   constructor(
     name: string,
@@ -28,12 +25,13 @@ export class Function implements Huffable {
   }
 
   [declare](): string {
+    this.isDeclared = true;
     return `#define function ${this.name}(${this.args.join(', ')}) ${
       this.type ? this.type + ' ' : ''
     }returns(${this.returns.join(', ')})`;
   }
 
-  [parse](): string {
+  [define](): string {
     return `__FUNC_SIG(${this.name})`;
   }
 }

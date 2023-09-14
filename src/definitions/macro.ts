@@ -1,25 +1,33 @@
-import {declare, parse} from './symbols';
+import {declare, define} from './symbols';
 import {Statement} from '../types/statement';
 import {Literal} from '../types';
 
-export class MacroCall<A extends string | never = string | never> {
-  constructor(readonly args: {[arg in A]: Literal}, readonly macro: Macro<A>) {}
+export class MacroCall {
+  constructor(readonly args: {[x: string]: Literal}, readonly macro: Macro) {}
+
+  [declare]() {
+    return this.macro[declare]();
+  }
+
+  [define]() {
+    // sort keys, return corresponding values
+    return `${this.macro.name}(${Object.keys(this.args)
+      .sort()
+      .map(k => this.args[k])
+      .join(', ')})`;
+  }
 }
 
 /**
  * A Huff macro.
  */
 export class Macro<A extends string | never = string | never> {
-  /** Macro name. */
   readonly name: string;
-  /** Arguments macro. */
   readonly args: A[];
-  /** Number of stack items popped. */
   readonly takes: number;
-  /** Number of stack items pushed. */
   readonly returns: number;
-  /** Is this a `macro` or a function `fn`? */
   readonly type: 'fn' | 'macro';
+  isDeclared = false;
 
   constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true} = {}) {
     this.name = name;
@@ -28,8 +36,11 @@ export class Macro<A extends string | never = string | never> {
     this.returns = params.returns || 0;
     this.type = params.fn ? 'fn' : 'macro';
 
+    // sort args to have a known order in declaration
+    this.args = this.args.sort();
+
     // assert takes and returns is integer
-    if (!Number.isInteger(this.takes) || Number.isInteger(this.returns)) {
+    if (!Number.isInteger(this.takes) || !Number.isInteger(this.returns)) {
       throw new Error('Takes and returns must be integer.');
     }
   }
@@ -39,30 +50,39 @@ export class Macro<A extends string | never = string | never> {
   }
 
   [declare](): string {
-    return `#define ${this.type}(${this.args.join(', ')})`; // TODO
-  }
-
-  [parse](args: Literal): string {
-    // TODO
-    return 'todo';
+    this.isDeclared = true;
+    return `#define ${this.type} ${this.name}(${this.args.join(', ')})`;
   }
 
   /** Calls `__codesize` for this macro. */
-  get len(): string {
+  get codesize() {
     return `__codesize(${this.name})`;
+  }
+
+  compile(): string {
+    // TODO
+    return '';
   }
 }
 
 export class Main extends Macro {
-  constructor(...ops: (Statement[] | Statement)[]) {
+  constructor(...ops: (Statement<string>[] | Statement<string>)[]) {
     super('MAIN');
-    this.body(...ops);
+  }
+
+  override body() {
+    throw new Error('Cannot call body of main');
+    return super.body();
   }
 }
 
 export class Constructor extends Macro {
-  constructor(...ops: (Statement[] | Statement)[]) {
+  constructor(...ops: (Statement<string>[] | Statement<string>)[]) {
     super('CONSTRUCTOR');
-    this.body(...ops);
+  }
+
+  override body() {
+    throw new Error('Cannot call body of constructor');
+    return super.body();
   }
 }

@@ -1,13 +1,11 @@
-import {declare, parse} from './symbols';
-import {Primitive} from '../types';
-import {Huffable} from '../types/huffable';
+import {Huffable, Primitive} from '../types';
+import {declare, define} from './symbols';
 
 /** An event interface. */
 export class Event implements Huffable {
-  /** Event name. */
   readonly name: string;
-  /** Event topic types. */
   readonly topics: (Primitive | `${Primitive} indexed`)[];
+  isDeclared = false;
 
   constructor(name: string, topics: (Primitive | `${Primitive} indexed`)[] = []) {
     this.name = name;
@@ -18,7 +16,7 @@ export class Event implements Huffable {
     return `#define event ${this.name}(${this.topics.join(', ')})`;
   }
 
-  [parse](): string {
+  [define](): string {
     return `__EVENT_HASH(${this.name})`;
   }
 }
