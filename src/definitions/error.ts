@@ -1,18 +1,23 @@
-import {getDeclaration, getPush, getSignature} from './symbols';
+import {Primitive} from '../types';
+import {Huffable} from '../types/huffable';
+import {declare, parse} from './symbols';
 
-export class Error {
+export class Error implements Huffable {
   /** Custom error name. */
   readonly name: string;
+  /** Error arguments. */
+  readonly args: Primitive[];
 
-  constructor(name: string /* TODO: types */) {
+  constructor(name: string, args: Primitive[] = []) {
     this.name = name;
+    this.args = args;
   }
 
-  [getDeclaration](): string {
-    return `#define error ${this.name}(TODO TODO)`;
+  [declare](): string {
+    return `#define error ${this.name}(${this.args.join(', ')})`;
   }
 
-  [getPush](): string {
+  [parse](): string {
     return `_ERROR(${this.name})`;
   }
 }

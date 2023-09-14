@@ -1,6 +1,6 @@
 # `thuffs`
 
-<img src="https://img.shields.io/badge/%E2%99%A5-14151B?logo=bun&logoColor=white" alt="bun love"/>
+<img src="https://img.shields.io/badge/%E2%99%A5-14151B?logo=bun" alt="bun love"/>
 
 Write, test, and deploy Huff; without ever leaving TypeScript.
 

@@ -1,26 +1,29 @@
 import {Function, Label, Macro, Main} from './definitions';
+import {Program} from './program';
 
-const addTwoFunc = new Function('addTwo', {args: ['uint256', 'uint256'], type: 'view', returns: ['uint256']});
-const addTwoLabel = new Label('addTwo');
-
-const ADD_TWO = new Macro(
-  'ADD_TWO',
-  {args: ['hi', 'bye']},
-
-  [0x04, 'CALLDATALOAD'], // load first 32 bytes onto the stack - number 1
-  [0x24, 'CALLDATALOAD'], // load second 32 bytes onto the stack - number 2
+const addConstantFunc = new Function('addConstant', {args: ['uint256'], type: 'view', returns: ['uint256']});
+const addConstantLabel = new Label('addConstant');
+const addConstant = new Macro('ADD_CONSTANT', {args: ['constant'], takes: 1}).body(
+  ['<constant>'], // load argument to stack
   'ADD', // add number 1 and 2 and put the result onto the stack
 
-  ['<hi>', '<bytesfsfds>'], // TODO: bugs
   [0b00, 'MSTORE'], // place the result in memory
   [32, 0, 'RETURN'] // return the result
 );
 
-const MAIN = new Main(
-  // get function selector
-  [0x00, 'CALLDATALOAD', 0xe0, 'SHR'],
-  // jump to iplementation
-  [addTwoFunc, 'EQ', addTwoLabel.src, 'JUMPI'],
+const main = new Main(
+  [0x00, 'CALLDATALOAD', 0xe0, 'SHR'], // get function selector
+  [addConstantFunc, 'EQ', addConstantLabel.src, 'JUMPI'], // jump to iplementation
+
   // handle jump
-  [addTwoLabel.dest, ADD_TWO]
+  addConstantLabel.dest,
+  [
+    0x04,
+    'CALLDATALOAD',
+    addConstant({
+      constant: 0x0,
+    }),
+  ]
 );
+
+new Program(main);

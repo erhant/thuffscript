@@ -1,21 +1,10 @@
-import {getDeclaration} from './symbols';
-import type {Literal, Op} from '../types';
-import {Constant} from './constant';
-import {Event} from './event';
-import {Function} from './function';
-import {Label} from '.';
+import {declare, parse} from './symbols';
+import {Statement} from '../types/statement';
+import {Literal} from '../types';
 
-type Code<A extends string | never = string | never> =
-  | `<${A}>`
-  | Literal
-  | Op
-  | Constant
-  | Function
-  | Event
-  | Macro
-  | Label['src']
-  | Label['dest'];
-type Codes<A extends string | never = never> = (Code<A> | Code<A>[])[];
+export class MacroCall<A extends string | never = string | never> {
+  constructor(readonly args: {[arg in A]: Literal}, readonly macro: Macro<A>) {}
+}
 
 /**
  * A Huff macro.
@@ -32,7 +21,7 @@ export class Macro<A extends string | never = string | never> {
   /** Is this a `macro` or a function `fn`? */
   readonly type: 'fn' | 'macro';
 
-  constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true}, ...ops: Codes<A>) {
+  constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true} = {}) {
     this.name = name;
     this.args = params.args || [];
     this.takes = params.takes || 0;
@@ -45,24 +34,35 @@ export class Macro<A extends string | never = string | never> {
     }
   }
 
-  [getDeclaration](): string {
+  body(...ops: (Statement<A>[] | Statement<A>)[]) {
+    return (args: {[arg in A]: Literal}) => new MacroCall(args, this);
+  }
+
+  [declare](): string {
     return `#define ${this.type}(${this.args.join(', ')})`; // TODO
   }
 
-  get codesize(): string {
+  [parse](args: Literal): string {
+    // TODO
+    return 'todo';
+  }
+
+  /** Calls `__codesize` for this macro. */
+  get len(): string {
     return `__codesize(${this.name})`;
   }
 }
 
-// TODO: export Fn, Constructor, and Main macros
 export class Main extends Macro {
-  constructor(...ops: Codes) {
-    super('MAIN', {}, ...ops);
+  constructor(...ops: (Statement[] | Statement)[]) {
+    super('MAIN');
+    this.body(...ops);
   }
 }
 
 export class Constructor extends Macro {
-  constructor(...ops: Codes) {
-    super('CONSTRUCTOR', {}, ...ops);
+  constructor(...ops: (Statement[] | Statement)[]) {
+    super('CONSTRUCTOR');
+    this.body(...ops);
   }
 }

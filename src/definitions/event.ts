@@ -1,8 +1,9 @@
-import {getDeclaration, getPush, getSignature} from './symbols';
+import {declare, parse} from './symbols';
 import {Primitive} from '../types';
+import {Huffable} from '../types/huffable';
 
 /** An event interface. */
-export class Event {
+export class Event implements Huffable {
   /** Event name. */
   readonly name: string;
   /** Event topic types. */
@@ -13,13 +14,11 @@ export class Event {
     this.topics = topics;
   }
 
-  [getDeclaration](): string {
-    return `#define event ${this.name}(${this.topics
-      .map(t => (typeof t === 'string' ? t : t[0] + ' indexed'))
-      .join(', ')})`;
+  [declare](): string {
+    return `#define event ${this.name}(${this.topics.join(', ')})`;
   }
 
-  [getPush](): string {
+  [parse](): string {
     return `__EVENT_HASH(${this.name})`;
   }
 }

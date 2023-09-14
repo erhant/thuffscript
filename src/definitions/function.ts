@@ -1,8 +1,9 @@
-import {getDeclaration, getPush, getSignature} from './symbols';
+import {declare, parse} from './symbols';
 import {Primitive} from '../types';
+import {Huffable} from '../types/huffable';
 
 /** A function interface. */
-export class Function {
+export class Function implements Huffable {
   /** Function name. */
   readonly name: string;
   /** Function argument types. */
@@ -18,7 +19,7 @@ export class Function {
       args?: Primitive[];
       returns?: Primitive[];
       type?: 'view' | 'payable' | 'pure' | 'nonpayable';
-    }
+    } = {}
   ) {
     this.name = name;
     this.args = params.args || [];
@@ -26,13 +27,13 @@ export class Function {
     this.returns = params.returns || [];
   }
 
-  [getDeclaration](): string {
+  [declare](): string {
     return `#define function ${this.name}(${this.args.join(', ')}) ${
       this.type ? this.type + ' ' : ''
     }returns(${this.returns.join(', ')})`;
   }
 
-  [getPush](): string {
+  [parse](): string {
     return `__FUNC_SIG(${this.name})`;
   }
 }
