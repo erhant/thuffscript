@@ -125,7 +125,7 @@ export class MacroCall {
   }
 
   define() {
-    return `${this.macro.name}(${this.sortedKeys.map(k => this.args[k]).join(', ')})`;
+    return `${this.macro.name}(${this.sortedKeys.map(k => '0x' + this.args[k].toString(16)).join(', ')})`;
   }
 }
 

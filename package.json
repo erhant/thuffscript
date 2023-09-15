@@ -6,7 +6,8 @@
   "version": "0.1.0",
   "scripts": {
     "example": "bun run ./examples/add.ts",
-    "build": "bun build ./src/index.ts --outdir ./build --target node"
+    "build": "bun build ./src/index.ts --outdir ./build --target node",
+    "huff": "huffc -b"
   },
   "devDependencies": {
     "bun-types": "latest"

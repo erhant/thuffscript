@@ -1,51 +1,48 @@
 import type {_1_16, _1_32, _1_4} from './util';
 
 /** All EVM [opcodes](https://www.evm.codes/), Shanghai version. */
-export type Op =
-  | Uppercase<EvmOps> // forced uppercase
-  | Lowercase<EvmOps>; // forced lowercase
-
 // prettier-ignore
-type EvmOps = 
+export type Op = 
 // Stop
-'STOP' |
+'stop' |
 // Arithmetic
-'ADD' | 'MUL' | 'SUB' | 'DIV' | 'SDIV' | 'MOD' | 'SMOD' | 'ADDMOD' | 'MULMOD' | 'EXP' | 'SIGNEXTEND' |
+'add' | 'mul' | 'sub' | 'div' | 'sdiv' | 'mod' | 'smod' | 'addmod' | 'mulmod' | 'exp' | 'signextend' |
 // Comparators & Logic
-'LT' | 'GT' | 'SLT' | 'SGT' | 'EQ' | 'ISZERO' | 'AND' | 'OR' | 'XOR' | 'NOT' |
+'lt' | 'gt' | 'slt' | 'sgt' | 'eq' | 'iszero' | 'and' | 'or' | 'xor' | 'not' |
 // Bytes & Shifting
-'BYTE' | 'SHL' | 'SHR' | 'SAR' |
+'byte' | 'shl' | 'shr' | 'sar' |
 // SHA3
-'SHA3' |
+'sha3' |
 // Address & balance
-'ADDRESS' | 'BALANCE' | 'ORIGIN' | 'CALLER' |
+'address' | 'balance' | 'origin' | 'caller' |
 // Call
-`CALL${'VALUE' | 'DATALOAD' | 'DATACOPY'}` |
+`call${'value' | 'dataload' | 'datacopy'}` |
 // Gasprice
-'GASPRICE' |
+'gasprice' |
 // Code, Extcode and Returndata
-`${'CODE' | 'EXTCODE' | 'RETURNDATA'}${'SIZE' | 'COPY'}` |
+`${'code' | 'extcode' | 'returndata'}${'size' | 'copy'}` |
 // Hash
-'EXTCODEHASH' | 'BLOCKHASH' |
+'extcodehash' | 'blockhash' |
 // Block stuff
-'COINBASE' | 'TIMESTAMP' | 'NUMBER' | 'PREVRANDAO' | 'GASLIMIT' | 'CHAINID' |
+'coinbase' | 'timestamp' | 'number' | 'prevrandao' | 'gaslimit' | 'chainid' |
 // Self balance
-'SELFBALANCE' |
+'selfbalance' |
 // Base fee
-'BASEFEE' |
+'basefee' |
 // Pop
-'POP' |
+'pop' |
 // Load and store
-`${'S'|'M'}${'LOAD' | 'STORE'}` | `MSTORE8` |
+`${'s'|'m'}${'load' | 'store'}` | `mstore8` |
 // Jumps, PC, MSIZE and GAS
-`JUMP${''|'I'|'DEST'}` | 'PC' | 'MSIZE' | 'GAS' |
+`jump${''|'i'|'dest'}` | 'pc' | 'msize' | 'gas' |
 // Push, Dup and Swap
-`PUSH${_1_32 | 0}` | `DUP${_1_16}` | `SWAP${_1_16}` |
+// TODO: do not use
+`push${_1_32 | 0}` | `dup${_1_16}` | `swap${_1_16}` |
 // Log
-`LOG${_1_4 | 0}` |
+`log${_1_4 | 0}` |
 // Creates and calls
-`CREATE${'' | '2'}` | `${'' | 'DELEGATE' | 'STATIC'}CALL` | 'CALLCODE' | 
+`create${'' | '2'}` | `${'' | 'delegate' | 'static'}call` | 'callcode' | 
 // Terminations
-'RETURN' | 'REVERT' | 'INVALID' | 'SELFDESTRUCT';
+'return' | 'revert' | 'invalid' | 'selfdestruct';
 
 // Challenge: shortest way to represent the opcodes in type system?
