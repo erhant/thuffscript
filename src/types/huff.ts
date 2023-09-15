@@ -1,3 +1,9 @@
+export type Declaration = {
+  type: 'function' | 'constant' | 'error' | 'event';
+  decl: string;
+  name: string;
+};
+
 export abstract class Definable {
   /** Name of the object. */
   name: string;
@@ -11,18 +17,18 @@ export abstract class Definable {
 }
 
 export abstract class Declarable extends Definable {
-  /** Type of this definable. */
-  readonly type: 'constant' | 'error' | 'macro' | 'event' | 'function';
+  /** Type of this declarable. */
+  readonly type: Declaration['type'];
   /** Is this object already declared? */
   isDeclared: boolean = false;
 
-  constructor(name: string, type: 'constant' | 'error' | 'macro' | 'event' | 'function') {
+  constructor(name: string, type: Declaration['type']) {
     super(name);
     this.type = type;
   }
 
   /** Object declaration */
-  declare(code: string) {
+  declare(code: string): Declaration {
     if (this.isDeclared) {
       throw new Error('already declared');
     }

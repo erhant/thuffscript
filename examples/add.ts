@@ -1,4 +1,4 @@
-import {Function, Label, Macro, Main, Program} from '../src';
+import {Function, Label, Macro, Main, compile} from '../src';
 
 const addConstantFunc = new Function('addConstant', {args: ['uint256'], type: 'view', returns: ['uint256']});
 const addConstantLabel = new Label('addConstant');
@@ -19,9 +19,11 @@ const main = new Main(
   addConstant({constant: 100})
 );
 
-new Program(main).doc({
+const huff = compile(main, {
   author: 'erhant <https://github.com/erhant>',
   description: 'An example addition with constant',
   license: 'UNLICENSED',
   title: 'Add Constant',
 });
+
+console.log(huff);

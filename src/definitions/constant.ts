@@ -6,7 +6,7 @@ import {Declarable, Literal} from '../types';
 export class Constant extends Declarable {
   readonly value: Literal | 'FREE_STORAGE_POINTER()';
 
-  /** If you do not provide a value, this acts like  */
+  /** If you do not provide a value, this acts like a `FREE_STORAGE_POINTER()`.  */
   constructor(name: string, value?: Literal | 'FREE_STORAGE_POINTER()') {
     super(name, 'constant');
     this.value = value || 'FREE_STORAGE_POINTER()';
