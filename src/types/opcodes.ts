@@ -1,8 +1,12 @@
 import type {_1_16, _1_32, _1_4} from './util';
 
 /** All EVM [opcodes](https://www.evm.codes/), Shanghai version. */
+export type Op =
+  | Uppercase<EvmOps> // forced uppercase
+  | Lowercase<EvmOps>; // forced lowercase
+
 // prettier-ignore
-export type Op = 
+type EvmOps = 
 // Stop
 'STOP' |
 // Arithmetic

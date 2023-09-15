@@ -19,11 +19,10 @@ const main = new Main(
   addConstant({constant: 100})
 );
 
-const huff = compile(main, {
-  author: 'erhant <https://github.com/erhant>',
+const code = compile(main, {
+  authors: ['erhant <https://github.com/erhant>'],
   description: 'An example addition with constant',
   license: 'UNLICENSED',
   title: 'Add Constant',
 });
-
-console.log(huff);
+await Bun.write('./examples/add.huff', code);

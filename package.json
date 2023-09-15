@@ -3,9 +3,10 @@
   "author": "erhant",
   "type": "module",
   "module": "src/index.ts",
+  "version": "0.1.0",
   "scripts": {
     "example": "bun run ./examples/add.ts",
-    "build": "bun build ./src/index.ts --outdir ./build --target bun"
+    "build": "bun build ./src/index.ts --outdir ./build --target node"
   },
   "devDependencies": {
     "bun-types": "latest"

@@ -1,6 +1,5 @@
-import {Jump} from '.';
 import {Constant, CustomError, Function, Event} from '../';
-import {type Statement, type Literal, Declarable, Definable} from '../types';
+import {Statement, Literal, Declarable, Definable} from '../types';
 
 /**
  * A Huff macro.
@@ -11,6 +10,7 @@ export class Macro<A extends string | never = string | never> {
   readonly takes: number;
   readonly returns: number;
   readonly type: 'fn' | 'macro';
+
   ops: (Statement<A>[] | Statement<A>)[] = [];
   isCompiled = false;
 

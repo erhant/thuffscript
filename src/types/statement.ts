@@ -1,13 +1,13 @@
 import type {Op} from '.';
-import type {Constant, Event, Function, Label, MacroCall, CustomError, Macro, Jump, MacroSize} from '../definitions';
+import type {Constant, Event, Function, MacroCall, CustomError, Jump, MacroSize} from '../definitions';
 
 /** A literal, usually a hexadecimal. */
 export type Literal = bigint | number;
 
+/** A statement for Huff. */
 export type Statement<Arg extends string | never> =
   // evm opcodes
-  | Uppercase<Op> // forced uppercase
-  | Lowercase<Op> // forced lowercase
+  | Op
   // literals
   | Literal // numbers, hex literals
   | Constant // constant
