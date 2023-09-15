@@ -1,25 +1,24 @@
-import {declare, define} from './symbols';
-import type {Huffable, Literal} from '../types';
+import {Declarable, Literal} from '../types';
 
 // TODO alternative api: leave value empty to be free storage pointer
 // TODO smol optimizations possible here
 
-export class Constant implements Huffable {
-  readonly name: string;
+export class Constant extends Declarable {
   readonly value: Literal | 'FREE_STORAGE_POINTER()';
-  isDeclared = false;
 
+  /** If you do not provide a value, this acts like  */
   constructor(name: string, value?: Literal | 'FREE_STORAGE_POINTER()') {
-    this.name = name;
+    super(name, 'constant');
     this.value = value || 'FREE_STORAGE_POINTER()';
   }
 
-  [declare]() {
-    this.isDeclared = true;
-    return `#define constant ${this.name} = ${typeof this.value !== 'string' ? '0x' : ''}${this.value.toString(16)}`;
+  declare() {
+    return super.declare(
+      `#define constant ${this.name} = ${typeof this.value !== 'string' ? '0x' : ''}${this.value.toString(16)}`
+    );
   }
 
-  [define]() {
+  define() {
     return `[${this.name}]`;
   }
 }

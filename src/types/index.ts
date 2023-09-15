@@ -1,4 +1,4 @@
 export * from './opcodes';
 export * from './primitives';
-export * from './huffable';
+export * from './huff';
 export * from './statement';

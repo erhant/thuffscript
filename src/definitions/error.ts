@@ -1,22 +1,18 @@
-import {declare, define} from './symbols';
-import type {Huffable, Primitive} from '../types';
+import {Declarable, Primitive} from '../types';
 
-export class CustomError implements Huffable {
-  readonly name: string;
+export class CustomError extends Declarable {
   readonly args: Primitive[];
-  isDeclared = false;
 
   constructor(name: string, args: Primitive[] = []) {
-    this.name = name;
+    super(name, 'error');
     this.args = args;
   }
 
-  [declare](): string {
-    this.isDeclared = true;
-    return `#define error ${this.name}(${this.args.join(', ')})`;
+  declare() {
+    return super.declare(`#define error ${this.name}(${this.args.join(', ')})`);
   }
 
-  [define](): string {
+  define() {
     return `__ERROR(${this.name})`;
   }
 }

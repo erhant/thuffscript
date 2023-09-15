@@ -16,9 +16,7 @@ const main = new Main(
 
   addConstantLabel.dest,
   [0x04, 'CALLDATALOAD'],
-  addConstant({
-    constant: 100,
-  })
+  addConstant({constant: 100})
 );
 
 new Program(main).doc({

@@ -1,25 +1,21 @@
-import {declare, define} from './symbols';
-import type {Huffable, Primitive} from '../types';
+import {Declarable, Primitive} from '../types';
 
 type IndexablePrimitive = Primitive | `${Primitive} indexed`;
 
 /** An event interface. */
-export class Event implements Huffable {
-  readonly name: string;
+export class Event extends Declarable {
   readonly topics: (Primitive | `${Primitive} indexed`)[];
-  isDeclared = false;
 
   constructor(name: string, topics: IndexablePrimitive[] = []) {
-    this.name = name;
+    super(name, 'event');
     this.topics = topics;
   }
 
-  [declare](): string {
-    this.isDeclared = true;
-    return `#define event ${this.name}(${this.topics.join(', ')})`;
+  declare() {
+    return super.declare(`#define event ${this.name}(${this.topics.join(', ')})`);
   }
 
-  [define](): string {
+  define() {
     return `__EVENT_HASH(${this.name})`;
   }
 }

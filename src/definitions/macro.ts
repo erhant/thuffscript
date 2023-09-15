@@ -1,27 +1,5 @@
-import {declare, define} from './symbols';
-import type {Statement, Literal} from '../types';
-
-/**
- * A call to a Huff macro with given arguments.
- *
- * This should never be called directly, but instead via the function
- * returned by `body` method of `Macro`.
- */
-export class MacroCall {
-  constructor(readonly args: {[x: string]: Literal}, readonly macro: Macro) {}
-
-  [declare]() {
-    return this.macro[declare]();
-  }
-
-  [define]() {
-    // sort keys, return corresponding values
-    return `${this.macro.name}(${Object.keys(this.args)
-      .sort()
-      .map(k => this.args[k])
-      .join(', ')})`;
-  }
-}
+import {Jump} from '.';
+import {type Statement, type Literal, Declarable, Definable} from '../types';
 
 /**
  * A Huff macro.
@@ -56,13 +34,12 @@ export class Macro<A extends string | never = string | never> {
     return this;
   }
 
-  [declare](): string {
-    this.isDeclared = true;
+  declare() {
     return `#define ${this.type} ${this.name}(${this.args.join(', ')})`;
   }
 
   /** Calls `__codesize` for this macro. */
-  get codesize() {
+  get codesize(): `__codesize(${string})` {
     return `__codesize(${this.name})`;
   }
 
@@ -86,17 +63,20 @@ export class Macro<A extends string | never = string | never> {
       let compiledLine: string[] = [];
       for (let op of line) {
         if (typeof op == 'bigint' || typeof op == 'number') {
+          // a literal
           compiledLine.push('0x' + BigInt(op).toString(16));
         } else if (typeof op === 'string') {
+          // an opcode / argument / codesize
           compiledLine.push(op);
-        } else if (typeof op === 'function') {
-          compiledLine.push(op());
-        } else if (Object.hasOwn(op, define)) {
-          compiledLine.push(op[define]());
+        } else if (op instanceof Declarable) {
+          // a declarable (and is also definable) (jump)
+          compiledLine.push(op.define());
+        } else if (op instanceof Definable) {
+          // a definable
+          compiledLine.push(op.define());
         } else {
-          // op satisfies never;
-          console.log(op);
-          console.log(typeof op);
+          // make sure no cases are left
+          op satisfies never;
           throw new Error('could not decide op');
         }
       }
@@ -106,6 +86,31 @@ export class Macro<A extends string | never = string | never> {
     // first levels are joined by newline
     // second levels are joined by space
     return compiledLines;
+  }
+}
+
+/**
+ * A call to a Huff macro with given arguments.
+ *
+ * This should never be called directly, but instead via the function
+ * returned by `body` method of `Macro`.
+ */
+export class MacroCall extends Declarable {
+  constructor(readonly args: {[x: string]: Literal}, readonly macro: Macro) {
+    super(macro.name, 'macro');
+  }
+
+  declare() {
+    return super.declare(this.macro.declare());
+  }
+
+  define() {
+    // sort keys, return corresponding values
+    // TODO: dont do this everytime
+    return `${this.macro.name}(${Object.keys(this.args)
+      .sort()
+      .map(k => this.args[k])
+      .join(', ')})`;
   }
 }
 

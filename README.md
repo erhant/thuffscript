@@ -10,7 +10,7 @@
 </div>
 
   <p align="center">
-    <i>Write, test, and deploy Huff; without ever leaving TypeScript.</i>
+    <i>Write Huff without ever leaving TypeScript.</i>
   </p>
 </p>
 
@@ -34,6 +34,7 @@ Thuffs exposes classes for all Huff constructs:
 
 - `Function` and `Event` classes for function and event interfaces.
 - `Label` for jump operations
+- `Constant` for constants, and a `Literal` type for things like `0xCAFE`
 - `Macro` for `macro` (or `fn`)
 - `Main` and `Constructor` macros
 - `Table` (todo)
@@ -41,6 +42,8 @@ Thuffs exposes classes for all Huff constructs:
 > [!NOTE]
 >
 > **Thuffs is not a tool to test or deploy Huff contracts**! You should simply use this to write & compile to Huff; the tests can be done via Foundry or Hardhat as is the case usually.
+
+## Constants
 
 ## Example
 
@@ -101,5 +104,6 @@ const MAIN = new Main(
 
 ## See also
 
-- <https://github.com/dethcrypto/evm-ts/blob/master/lib/opcodes/pop.ts>
-- <https://twitter.com/Zac_Aztec/status/1697359614692430100>
+> "I designed Huff. What the fuck is a type?"
+>
+> - [Zac Williamson, 2023](https://twitter.com/Zac_Aztec/status/1697359614692430100)

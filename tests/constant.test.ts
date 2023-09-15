@@ -5,15 +5,15 @@ describe('constants', () => {
   it('neg', () => {
     // https://github.com/huff-language/huffmate/blob/main/src/math/Math.huff
     const constant = new Constant('NEG1', 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn);
-    expect(constant[declare]()).toBe(
+    expect(constantdeclare()).toBe(
       '#define constant NEG1 = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     );
-    expect(constant[define]()).toBe('[NEG1]');
+    expect(constantdefine()).toBe('[NEG1]');
   });
 
   it('free storage pointer', () => {
     const constant = new Constant('SLOT', 'FREE_STORAGE_POINTER()');
-    expect(constant[declare]()).toBe('#define constant SLOT = FREE_STORAGE_POINTER()');
-    expect(constant[define]()).toBe('[SLOT]');
+    expect(constantdeclare()).toBe('#define constant SLOT = FREE_STORAGE_POINTER()');
+    expect(constantdefine()).toBe('[SLOT]');
   });
 });

@@ -1,5 +1,5 @@
 import type {Op} from '.';
-import type {Constant, Event, Function, Label, MacroCall, CustomError, Macro} from '../definitions';
+import type {Constant, Event, Function, Label, MacroCall, CustomError, Macro, Jump} from '../definitions';
 
 /** A literal, usually a hexadecimal. */
 export type Literal = bigint | number;
@@ -20,7 +20,4 @@ export type Statement<Arg extends string | never> =
   | Macro['codesize'] // macro codesize
   | `<${Arg}>` // arguments to a macro/fn
   // jumps
-  | Label['src'] // a Jump source
-  | Label['dest']; // a Jump destination
-
-//   type Codes<A extends string | never = never> = (Code<A> | Code<A>[])[];
+  | Jump; // a Jump source & destination

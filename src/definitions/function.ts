@@ -1,14 +1,10 @@
-import {declare, define} from './symbols';
-import {Primitive} from '../types';
-import {Huffable} from '../types/huffable';
+import {Primitive, Declarable} from '../types';
 
 /** A function interface. */
-export class Function implements Huffable {
-  readonly name: string;
+export class Function extends Declarable {
   readonly args: Primitive[];
   readonly returns: Primitive[];
-  readonly type: 'view' | 'payable' | 'pure' | 'nonpayable' | null;
-  isDeclared = false;
+  readonly functype: 'view' | 'payable' | 'pure' | 'nonpayable' | null;
 
   constructor(
     name: string,
@@ -18,20 +14,21 @@ export class Function implements Huffable {
       type?: 'view' | 'payable' | 'pure' | 'nonpayable';
     } = {}
   ) {
-    this.name = name;
+    super(name, 'function');
     this.args = params.args || [];
-    this.type = params.type || null;
+    this.functype = params.type || null;
     this.returns = params.returns || [];
   }
 
-  [declare](): string {
-    this.isDeclared = true;
-    return `#define function ${this.name}(${this.args.join(', ')}) ${
-      this.type ? this.type + ' ' : ''
-    }returns (${this.returns.join(', ')})`;
+  declare() {
+    return super.declare(
+      `#define function ${this.name}(${this.args.join(', ')}) ${
+        this.functype ? this.functype + ' ' : ''
+      }returns (${this.returns.join(', ')})`
+    );
   }
 
-  [define](): string {
+  define() {
     return `__FUNC_SIG(${this.name})`;
   }
 }

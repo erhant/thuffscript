@@ -5,4 +5,3 @@ export * from './function';
 export * from './label';
 export * from './macro';
 export * from './table';
-export * from './symbols';

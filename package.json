@@ -5,7 +5,7 @@
   "module": "src/index.ts",
   "scripts": {
     "example": "bun run ./examples/add.ts",
-    "build": "bun build ./src/index.ts --outdir ./build"
+    "build": "bun build ./src/index.ts --outdir ./build --target bun"
   },
   "devDependencies": {
     "bun-types": "latest"
