@@ -1,21 +1,18 @@
-import {Constant, CustomError, Function, Event} from '../';
-import {Statement, Literal, Declarable, Definable} from '../types';
+import {Declarables} from '../common';
+import {Body} from '../common/body';
+import {Statement, Literal} from '../types';
 
 /**
  * A Huff macro.
  */
-export class Macro<A extends string | never = string | never> {
-  readonly name: string;
+export class Macro<A extends string | never = string | never> extends Body<A> {
   readonly args: A[];
   readonly takes: number;
   readonly returns: number;
   readonly type: 'fn' | 'macro';
 
-  ops: (Statement<A>[] | Statement<A>)[] = [];
-  isCompiled = false;
-
   constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true} = {}) {
-    this.name = name;
+    super(name);
     this.args = params.args || [];
     this.takes = params.takes || 0;
     this.returns = params.returns || 0;
@@ -37,76 +34,31 @@ export class Macro<A extends string | never = string | never> {
 
   /** Returns a callable macro function with type-safe parameters. */
   get callable() {
-    return (args: {[arg in A]: Literal}) => new MacroCall(args, this);
+    return (args: {[arg in A]: Literal}) => new MacroCall(this, args);
   }
 
-  /** Returns a statement that yields codesize of the macro. */
-  get codesize() {
+  call(args: {[arg in A]: Literal}) {
+    return new MacroCall(this, args);
+  }
+
+  /** Returns a statement that yields `codesize` of the macro. */
+  get size() {
     return new MacroSize(this);
   }
 
   compile(): {
     body: string;
-    declarables: (Constant | Function | Event | CustomError)[];
+    declarables: Declarables[];
     macros: Macro[];
   } {
-    if (this.ops.length === 0) {
-      throw new Error('empty macro body');
-    }
-    if (this.isCompiled) {
-      throw new Error('already compiled');
-    }
-
-    this.isCompiled = true;
-
-    let lines: string[][] = [];
-    let declarables: (Constant | Function | Event | CustomError)[] = [];
-    let macros: Macro[] = [];
-    this.ops
-      .map(line => (Array.isArray(line) ? line : [line]))
-      .forEach(line => {
-        let statements: string[] = [];
-
-        line.forEach(op => {
-          if (typeof op == 'bigint' || typeof op == 'number') {
-            // a literal (bigint or number)
-            let num = BigInt(op).toString(16);
-            // make sure literal has even length
-            if (num.length % 2 === 1) {
-              num = '0' + num;
-            }
-            statements.push('0x' + num);
-          } else if (typeof op === 'string') {
-            // an opcode / argument
-            statements.push(op);
-          } else if (op instanceof Declarable) {
-            // a declarable (and is also definable) (jump)
-            statements.push(op.define());
-            declarables.push(op);
-          } else if (op instanceof Definable) {
-            // a definable, without declaration (e.g. a label)
-            statements.push(op.define());
-          } else if (op instanceof MacroCall || op instanceof MacroSize) {
-            // macro stuff
-            statements.push(op.define());
-            macros.push(op.macro);
-          } else {
-            // make sure no cases are left
-            op satisfies never;
-            throw new Error('could not parse op: ' + op);
-          }
-        });
-
-        lines.push(statements);
-      });
-
+    const comp = super.compile();
     return {
       // prettier-ignore
       body: `#define ${this.type} ${this.name}(${this.args.join(', ')}) = takes(${this.takes}) returns(${this.returns}) {
-    ${lines.map(line => line.join(' ')).join('\n    ')}
+    ${comp.body}
 }`,
-      declarables,
-      macros,
+      declarables: comp.declarables,
+      macros: comp.macros,
     };
   }
 }
@@ -119,7 +71,10 @@ export class Macro<A extends string | never = string | never> {
  */
 export class MacroCall {
   readonly sortedKeys: string[];
-  constructor(readonly args: {[x: string]: Literal}, readonly macro: Macro) {
+  constructor(
+    readonly macro: Macro,
+    readonly args: {[x: string]: Literal}
+  ) {
     // keys must be sorted to ensure the same order with values, regardless of object keys order
     this.sortedKeys = Object.keys(this.args).sort();
   }

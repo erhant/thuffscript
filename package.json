@@ -5,12 +5,19 @@
   "module": "src/index.ts",
   "version": "0.1.0",
   "scripts": {
-    "example": "bun run ./examples/add.ts",
+    "example:add": "bun run ./examples/add.ts",
     "build": "bun build ./src/index.ts --outdir ./build --target node",
-    "huff": "huffc -b"
+    "huff": "huffc -b",
+    "format": "prettier --check '**/*.ts'",
+    "lint": "eslint '**/*.ts'"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "bun-types": "latest",
+    "eslint": "^8.49.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -21,5 +28,21 @@
     "trailingComma": "es5",
     "arrowParens": "avoid",
     "printWidth": 120
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "root": true,
+    "ignorePatterns": [
+      "sage",
+      "build",
+      "dist"
+    ]
   }
 }

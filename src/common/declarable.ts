@@ -1,31 +1,29 @@
+import {Constant, CustomError, EventABI, FunctionABI} from '..';
+import {FreeStoragePointer, Table} from '../definitions';
+
 export type Declaration = {
-  type: 'function' | 'constant' | 'error' | 'event';
+  type: 'function' | 'constant' | 'error' | 'event' | 'table';
   decl: string;
   name: string;
 };
 
-export abstract class Definable {
+export type Declarables = FunctionABI | Constant | FreeStoragePointer | CustomError | EventABI | Table;
+
+export abstract class Declarable {
   /** Name of the object. */
   name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-
-  /** Object definition */
-  abstract define(): string;
-}
-
-export abstract class Declarable extends Definable {
   /** Type of this declarable. */
   readonly type: Declaration['type'];
   /** Is this object already declared? */
   isDeclared: boolean = false;
 
   constructor(name: string, type: Declaration['type']) {
-    super(name);
+    this.name = name;
     this.type = type;
   }
+
+  /** Object definition */
+  abstract define(): string;
 
   /** Object declaration */
   declare(code: string): Declaration {

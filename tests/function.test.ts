@@ -1,10 +1,10 @@
 import {describe, it, expect} from 'bun:test';
-import {Function} from '../src';
+import {FunctionABI} from '../src';
 
 describe('function interfaces', () => {
   it('set owner', () => {
     // https://github.com/huff-language/huffmate/blob/main/src/auth/Owned.huff
-    const func = new Function('setOwner', {args: ['address'], type: 'nonpayable'});
+    const func = new FunctionABI('setOwner', {args: ['address'], type: 'nonpayable'});
     expect(func.isDeclared).toBeFalse();
     expect(func.declare().decl).toBe('#define function setOwner(address) nonpayable returns ()');
     expect(func.isDeclared).toBeTrue();
@@ -13,7 +13,7 @@ describe('function interfaces', () => {
 
   it('max', () => {
     // https://github.com/huff-language/huffmate/blob/main/src/math/Math.huff
-    const func = new Function('max', {args: ['uint256', 'uint256'], type: 'pure', returns: ['uint256']});
+    const func = new FunctionABI('max', {args: ['uint256', 'uint256'], type: 'pure', returns: ['uint256']});
     expect(func.isDeclared).toBeFalse();
     expect(func.declare().decl).toBe('#define function max(uint256, uint256) pure returns (uint256)');
     expect(func.isDeclared).toBeTrue();

@@ -1,7 +1,8 @@
-import {Primitive, Declarable} from '../types';
+import {Declarable} from '../common';
+import {Primitive} from '../types';
 
 /** A function interface. */
-export class Function extends Declarable {
+export class FunctionABI extends Declarable {
   readonly args: Primitive[];
   readonly returns: Primitive[];
   readonly functype: 'view' | 'payable' | 'pure' | 'nonpayable' | null;

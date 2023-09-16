@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'bun:test';
-import {Constant} from '../src/definitions';
+import {Constant, FreeStoragePointer} from '../src/definitions';
 
 describe('constants', () => {
   it('neg', () => {
@@ -19,7 +19,7 @@ describe('constants', () => {
   });
 
   it('free storage pointer', () => {
-    const constant = new Constant('SLOT', 'FREE_STORAGE_POINTER()');
+    const constant = new FreeStoragePointer('SLOT');
 
     expect(constant.isDeclared).toBeFalse();
     const declaration = constant.declare();

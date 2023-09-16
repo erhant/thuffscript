@@ -1,7 +1,7 @@
 import {describe, it, expect} from 'bun:test';
-import {EventABI} from '../src/';
+import {EventABI} from '../src';
 
-describe('event interfaces', () => {
+describe('jump & code tables', () => {
   it('transfer', () => {
     // https://github.com/huff-language/huffmate/blob/main/src/tokens/ERC20.huff
     const event = new EventABI('Transfer', ['address', 'address', 'uint256']);

@@ -1,9 +1,10 @@
-import {Declarable, Primitive} from '../types';
+import {Declarable} from '../common';
+import {Primitive} from '../types';
 
 type IndexablePrimitive = Primitive | `${Primitive} indexed`;
 
 /** An event interface. */
-export class Event extends Declarable {
+export class EventABI extends Declarable {
   readonly topics: (Primitive | `${Primitive} indexed`)[];
 
   constructor(name: string, topics: IndexablePrimitive[] = []) {

@@ -1,4 +1,5 @@
-import {Declarable, Primitive} from '../types';
+import {Declarable} from '../common';
+import {Primitive} from '../types';
 
 export class CustomError extends Declarable {
   readonly args: Primitive[];

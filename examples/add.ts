@@ -1,6 +1,6 @@
-import {Function, Label, Macro, Main, compile} from '../src';
+import {FunctionABI, Label, Macro, Main, compile} from '../src';
 
-const addConstantFunc = new Function('addConstant', {args: ['uint256'], type: 'view', returns: ['uint256']});
+const addConstantFunc = new FunctionABI('addConstant', {args: ['uint256'], type: 'view', returns: ['uint256']});
 const addConstantLabel = new Label('addConstant');
 const addConstant = new Macro('ADD_CONSTANT', {args: ['constant'], takes: 1}).body(
   ['<constant>'], // load argument to stack

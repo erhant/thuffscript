@@ -1,5 +1,15 @@
 import type {Op} from '.';
-import type {Constant, Event, Function, MacroCall, CustomError, Jump, MacroSize} from '../definitions';
+import type {
+  Constant,
+  EventABI,
+  FunctionABI,
+  MacroCall,
+  CustomError,
+  MacroSize,
+  Table,
+  Label,
+  FreeStoragePointer,
+} from '../definitions';
 
 /** A literal, usually a hexadecimal. */
 export type Literal = bigint | number;
@@ -11,13 +21,18 @@ export type Statement<Arg extends string | never> =
   // literals
   | Literal // numbers, hex literals
   | Constant // constant
+  | FreeStoragePointer // storage slot
   // interfaces & abis
-  | Function // function interface
-  | Event // event interface
+  | FunctionABI // function interface
+  | EventABI // event interface
   | CustomError // a custom error
-  // macro stuff
+  // table
+  | Table['size']
+  | Table['start']
+  // macros and fns
   | MacroCall // a macro / fn call
   | MacroSize // macro codesize
   | `<${Arg}>` // arguments to a macro/fn
-  // jumps
-  | Jump; // a Jump source & destination
+  // jump source & destination
+  | Label['src']
+  | Label['dest'];

@@ -32,7 +32,7 @@ bun run build
 
 Thuffs exposes classes for all Huff constructs:
 
-- `Function` and `Event` classes for function and event interfaces.
+- `FunctionABI` and `EventABI` classes for function and event interfaces.
 - `Label` for jump operations
 - `Constant` for constants, and a `Literal` type for things like `0xCAFE`
 - `Macro` for `macro` (or `fn`)
@@ -42,8 +42,6 @@ Thuffs exposes classes for all Huff constructs:
 > [!NOTE]
 >
 > **Thuffs is not a tool to test or deploy Huff contracts**! You should simply use this to write & compile to Huff; the tests can be done via Foundry or Hardhat as is the case usually.
-
-## Constants
 
 ## Example
 
@@ -76,9 +74,9 @@ Here is a Huff code (from Huff [docs](https://docs.huff.sh/tutorial/the-basics/#
 Here is that same code in Thuffs:
 
 ```ts
-import {Function, Label, Macro, Main} from './definitions';
+import {FunctionABI, Label, Macro, Main} from './definitions';
 
-const addTwoFunc = new Function({name: 'addTwo', args: ['uint256', 'uint256'], type: 'view', returns: ['uint256']});
+const addTwoFunc = new FunctionABI({name: 'addTwo', args: ['uint256', 'uint256'], type: 'view', returns: ['uint256']});
 const addTwoLabel = new Label('addTwo');
 
 const ADD_TWO = new Macro(

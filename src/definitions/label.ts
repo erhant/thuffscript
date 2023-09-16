@@ -1,35 +1,35 @@
-import {Definable} from '..';
-
 /**
  * A jump label.
  */
 export class Label {
   readonly name: string;
-  readonly src: Jump;
-  readonly dest: Jump;
+  readonly src: JumpSource;
+  readonly dest: JumpDest;
   destinationPlaced = false;
 
   constructor(name: string) {
     this.name = name;
-    this.src = new Jump(this, false);
-    this.dest = new Jump(this, true);
+    this.src = new JumpSource(this);
+    this.dest = new JumpDest(this);
   }
 }
 
-export class Jump extends Definable {
-  constructor(readonly label: Label, readonly dest: boolean) {
-    super(label.name);
-  }
+export class JumpDest {
+  constructor(readonly label: Label) {}
 
   define() {
-    if (this.dest) {
-      if (this.label.destinationPlaced) {
-        throw new Error('label already placed');
-      }
-      this.label.destinationPlaced = true;
-      return `${this.label.name}:`;
-    } else {
-      return `${this.label.name}`;
+    if (this.label.destinationPlaced) {
+      throw new Error('destination already placed');
     }
+    this.label.destinationPlaced = true;
+    return `${this.label.name}:`;
+  }
+}
+
+export class JumpSource {
+  constructor(readonly label: Label) {}
+
+  define() {
+    return `${this.label.name}`;
   }
 }

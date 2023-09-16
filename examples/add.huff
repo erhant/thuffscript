@@ -17,14 +17,14 @@
 #define macro ADD_CONSTANT(constant) = takes(1) returns(0) {
     <constant>
     add
-    0x00 mstore
-    0x20 0x00 return
+    0x0 mstore
+    0x020 0x00 return
 }
 
 #define macro MAIN() = takes(0) returns(0) {
     0x00 calldataload 0xe0 shr
     __FUNC_SIG(addConstant) eq addConstant jumpi
     addConstant:
-    0x04 calldataload
+    0x4 calldataload
     ADD_CONSTANT(0x64)
 }
