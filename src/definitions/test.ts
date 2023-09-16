@@ -1,7 +1,7 @@
 import {Macro} from '.';
 import {Declarables} from '../common';
 import {Body} from '../common/body';
-import {Literal} from '../types';
+import {Literal, Statements} from '../types';
 
 /**
  * A Huff test.
@@ -12,6 +12,11 @@ export class Test extends Body {
     readonly decorators: {[decorator in 'calldata' | 'value']?: Literal} = {}
   ) {
     super(name);
+  }
+
+  body(...ops: Statements[]) {
+    super.ops = ops;
+    return this;
   }
 
   compile(): {

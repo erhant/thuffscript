@@ -10,5 +10,6 @@ export {
   EventABI,
   FunctionABI,
   Label,
+  Test,
 } from './definitions';
 export * from './compile';

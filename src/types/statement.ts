@@ -37,3 +37,9 @@ export type Statement =
   // jump source & destination
   | Label['src']
   | Label['dest'];
+
+export type Statements = Statement[] | Statement;
+
+export type ArgStatement<A extends string | undefined> = A extends undefined ? Statement : Statement | `<${A}>`;
+
+export type ArgStatements<A extends string | undefined> = ArgStatement<A>[] | ArgStatement<A>;

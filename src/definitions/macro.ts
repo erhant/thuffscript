@@ -1,17 +1,18 @@
 import {Declarables} from '../common';
 import {Body} from '../common/body';
-import {Literal} from '../types';
+import {ArgStatements, Literal, OpCode} from '../types';
 
 /**
  * A Huff macro.
  */
-export class Macro extends Body {
-  readonly args: string[];
+export class Macro<Args extends string | never = string | never> extends Body {
+  readonly args: Args[];
+  // readonly arg: {[arg in A]: MacroArg};
   readonly takes: number;
   readonly returns: number;
   readonly type: 'fn' | 'macro';
 
-  constructor(name: string, params: {args?: string[]; takes?: number; returns?: number; fn?: true} = {}) {
+  constructor(name: string, params: {args?: Args[]; takes?: number; returns?: number; fn?: true} = {}) {
     super(name);
     this.args = params.args || [];
     this.takes = params.takes || 0;
@@ -19,7 +20,9 @@ export class Macro extends Body {
     this.type = params.fn ? 'fn' : 'macro';
 
     // sort args to have a known order in declaration
-    this.args = this.args.sort();
+    this.args.sort();
+
+    // this.arg = Object.fromEntries(this.args.map(arg => [arg, new MacroArg(this, arg)])) as typeof this.arg;
 
     // assert takes and returns is integer
     if (!Number.isInteger(this.takes) || !Number.isInteger(this.returns)) {
@@ -27,22 +30,24 @@ export class Macro extends Body {
     }
   }
 
-  /** Returns a callable macro function with type-safe parameters. */
-  get callable() {
-    return (args: {[arg in string]: Literal}) => new MacroCall(this, args);
-  }
-
-  call(args: {[arg in string]: Literal}) {
+  call(args: {[arg in Args]: Literal}): MacroCall {
     return new MacroCall(this, args);
   }
 
   /** Returns a statement that yields `codesize` of the macro. */
-  get size() {
+  get size(): MacroSize {
     return new MacroSize(this);
   }
 
-  arg(arg: string) {
-    return new MacroArg(this, arg);
+  body(...ops: ArgStatements<Args>[]) {
+    const parsedOps: typeof this.ops = ops.map(op => {
+      const curOp = Array.isArray(op) ? op : [op];
+      return curOp.map(op =>
+        typeof op === 'string' && op.startsWith('<') && op.endsWith('>') ? new MacroArg(this, op) : (op as OpCode)
+      );
+    });
+    super.ops = parsedOps;
+    return this;
   }
 
   compile(): {

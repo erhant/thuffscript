@@ -1,17 +1,12 @@
 import {Declarable, Declarables} from '.';
 import {TableSize, TableStart, JumpSource, JumpDest, MacroCall, MacroSize, Macro, MacroArg} from '../definitions';
-import {Statement} from '../types';
+import {Statements} from '../types';
 
 export class Body {
-  ops: (Statement[] | Statement)[] = [];
+  ops: Statements[] = [];
   isCompiled = false;
 
   constructor(readonly name: string) {}
-
-  body(...ops: (Statement[] | Statement)[]) {
-    this.ops = ops;
-    return this;
-  }
 
   compile(): {
     body: string;
@@ -58,10 +53,15 @@ export class Body {
             statements.push(op.define());
             declarables.push(op.table);
           } else if (op instanceof MacroCall || op instanceof MacroSize || op instanceof MacroArg) {
-            // an object with `define`, without `declaration`, with `body`
-            // which is a macro
+            // an object with `define` but without `declaration`, with `body`
+            // e.g. a macro call or a macro codesize
             statements.push(op.define());
             macros.push(op.macro);
+
+            // in the case of a macro argument, it must be asserted that this is the currently compiled macro
+            if (op instanceof MacroArg && op.macro.name !== this.name && op.macro.args.includes(op.arg)) {
+              throw new Error('argument used outside its macro');
+            }
           } else {
             // confirm that there are no cases are left unhandled
             op satisfies never;
