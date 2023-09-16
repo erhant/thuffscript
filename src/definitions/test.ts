@@ -1,6 +1,7 @@
 import {Macro} from '.';
+import {Declarables} from '../common';
 import {Body} from '../common/body';
-import {Statement, Literal, Declarables} from '../types';
+import {Literal} from '../types';
 
 /**
  * A Huff test.
@@ -8,14 +9,9 @@ import {Statement, Literal, Declarables} from '../types';
 export class Test extends Body {
   constructor(
     name: string,
-    readonly decorators: {[decorator in 'calldata' | 'value']?: Literal | null} = {}
+    readonly decorators: {[decorator in 'calldata' | 'value']?: Literal} = {}
   ) {
     super(name);
-  }
-
-  body(...ops: (Statement<string>[] | Statement<string>)[]) {
-    this.ops = ops;
-    return this;
   }
 
   compile(): {
@@ -24,11 +20,11 @@ export class Test extends Body {
     macros: Macro[];
   } {
     const comp = super.compile();
-    const decorators = [
+    const decoratorDefinitions = [
       this.decorators.calldata ? `calldata("0x${this.decorators.calldata.toString(16)}")` : null,
       this.decorators.value ? `value(0x${this.decorators.value.toString(16)})` : null,
     ].filter(d => d !== null) as string[];
-    const decoratorString = decorators.length > 0 ? `#[${decorators.join(', ')}]\n    ` : '';
+    const decoratorString = decoratorDefinitions.length > 0 ? `#[${decoratorDefinitions.join(', ')}]\n` : '';
     return {
       body: `${decoratorString}#define test ${this.name}() = {
     ${comp.body}

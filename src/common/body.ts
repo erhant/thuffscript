@@ -1,12 +1,17 @@
 import {Declarable, Declarables} from '.';
-import {TableSize, TableStart, JumpSource, JumpDest, MacroCall, MacroSize, Macro} from '../definitions';
+import {TableSize, TableStart, JumpSource, JumpDest, MacroCall, MacroSize, Macro, MacroArg} from '../definitions';
 import {Statement} from '../types';
 
-export class Body<A extends string | never = string | never> {
-  ops: (Statement<A>[] | Statement<A>)[] = [];
+export class Body {
+  ops: (Statement[] | Statement)[] = [];
   isCompiled = false;
 
   constructor(readonly name: string) {}
+
+  body(...ops: (Statement[] | Statement)[]) {
+    this.ops = ops;
+    return this;
+  }
 
   compile(): {
     body: string;
@@ -52,7 +57,7 @@ export class Body<A extends string | never = string | never> {
             // e.g. a table with size and start
             statements.push(op.define());
             declarables.push(op.table);
-          } else if (op instanceof MacroCall || op instanceof MacroSize) {
+          } else if (op instanceof MacroCall || op instanceof MacroSize || op instanceof MacroArg) {
             // an object with `define`, without `declaration`, with `body`
             // which is a macro
             statements.push(op.define());

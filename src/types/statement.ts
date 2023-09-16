@@ -1,4 +1,4 @@
-import type {Op} from '.';
+import type {OpCode} from '.';
 import type {
   Constant,
   EventABI,
@@ -9,15 +9,16 @@ import type {
   Table,
   Label,
   FreeStoragePointer,
+  MacroArg,
 } from '../definitions';
 
 /** A literal, usually a hexadecimal. */
 export type Literal = bigint | number;
 
 /** A statement for Huff. */
-export type Statement<Arg extends string | never> =
+export type Statement =
   // evm opcodes
-  | Op
+  | OpCode
   // literals
   | Literal // numbers, hex literals
   | Constant // constant
@@ -30,9 +31,9 @@ export type Statement<Arg extends string | never> =
   | Table['size']
   | Table['start']
   // macros and fns
-  | MacroCall // a macro / fn call
+  | MacroCall // a macro call
   | MacroSize // macro codesize
-  | `<${Arg}>` // arguments to a macro/fn
+  | MacroArg // a macro argument
   // jump source & destination
   | Label['src']
   | Label['dest'];

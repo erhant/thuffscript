@@ -2,7 +2,7 @@ import type {_1_16, _1_32, _1_4} from './util';
 
 /** All EVM [opcodes](https://www.evm.codes/), Shanghai version. */
 // prettier-ignore
-export type Op = 
+export type OpCode = 
 // Stop
 'stop' |
 // Arithmetic

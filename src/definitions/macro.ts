@@ -1,17 +1,17 @@
 import {Declarables} from '../common';
 import {Body} from '../common/body';
-import {Statement, Literal} from '../types';
+import {Literal} from '../types';
 
 /**
  * A Huff macro.
  */
-export class Macro<A extends string | never = string | never> extends Body<A> {
-  readonly args: A[];
+export class Macro extends Body {
+  readonly args: string[];
   readonly takes: number;
   readonly returns: number;
   readonly type: 'fn' | 'macro';
 
-  constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true} = {}) {
+  constructor(name: string, params: {args?: string[]; takes?: number; returns?: number; fn?: true} = {}) {
     super(name);
     this.args = params.args || [];
     this.takes = params.takes || 0;
@@ -27,23 +27,22 @@ export class Macro<A extends string | never = string | never> extends Body<A> {
     }
   }
 
-  body(...ops: (Statement<A>[] | Statement<A>)[]) {
-    this.ops = ops;
-    return this;
-  }
-
   /** Returns a callable macro function with type-safe parameters. */
   get callable() {
-    return (args: {[arg in A]: Literal}) => new MacroCall(this, args);
+    return (args: {[arg in string]: Literal}) => new MacroCall(this, args);
   }
 
-  call(args: {[arg in A]: Literal}) {
+  call(args: {[arg in string]: Literal}) {
     return new MacroCall(this, args);
   }
 
   /** Returns a statement that yields `codesize` of the macro. */
   get size() {
     return new MacroSize(this);
+  }
+
+  arg(arg: string) {
+    return new MacroArg(this, arg);
   }
 
   compile(): {
@@ -92,24 +91,25 @@ export class MacroSize {
   }
 }
 
-export class Main extends Macro {
-  constructor(...ops: (Statement<string>[] | Statement<string>)[]) {
-    super('MAIN');
-    super.ops = ops;
-  }
+export class MacroArg {
+  constructor(
+    readonly macro: Macro,
+    readonly arg: string
+  ) {}
 
-  body() {
-    return this;
+  define() {
+    return `<${this.arg}>`;
+  }
+}
+
+export class Main extends Macro {
+  constructor() {
+    super('MAIN');
   }
 }
 
 export class Constructor extends Macro {
-  constructor(...ops: (Statement<string>[] | Statement<string>)[]) {
+  constructor() {
     super('CONSTRUCTOR');
-    super.ops = ops;
-  }
-
-  body() {
-    return this;
   }
 }
