@@ -2,9 +2,7 @@ import {Declarables} from '../common';
 import {Body} from '../common/body';
 import {Literal} from '../types';
 
-/**
- * A Huff macro.
- */
+/** A macro / fn. */
 export class Macro<A extends string = string> extends Body<A> {
   readonly args: A[];
   readonly takes: number;

@@ -1,6 +1,7 @@
 import {Declarable} from '../common';
 import {Primitive} from '../types';
 
+/** A custom error interface. */
 export class ErrorABI extends Declarable {
   readonly args: Primitive[];
 

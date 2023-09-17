@@ -2,6 +2,7 @@ import {Label} from '.';
 import {Declarable} from '../common';
 import {Literal} from '../types';
 
+/** A code / jump table. */
 export abstract class Table extends Declarable {
   readonly start: TableStart;
   readonly size: TableSize;

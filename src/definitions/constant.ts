@@ -1,6 +1,7 @@
 import {Declarable} from '../common';
 import {Literal} from '../types';
 
+/** A constant. */
 export class Constant extends Declarable {
   readonly value: Literal;
 

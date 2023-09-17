@@ -3,9 +3,7 @@ import {Declarables} from '../common';
 import {Body} from '../common/body';
 import {Literal} from '../types';
 
-/**
- * A Huff test.
- */
+/** A test. */
 export class Test extends Body {
   constructor(
     name: string,

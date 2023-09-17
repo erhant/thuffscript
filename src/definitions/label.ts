@@ -1,6 +1,4 @@
-/**
- * A jump label.
- */
+/** A jump label. */
 export class Label {
   readonly name: string;
   readonly src: JumpSource;
