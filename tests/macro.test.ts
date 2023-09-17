@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'bun:test';
 import {Macro} from '../src/';
 
-describe('#define macro', () => {
+describe('macro', () => {
   it('arguments', () => {
     // prettier-ignore
     const code = new Macro('WithArgs', {args: ['foo', 'bar']}).body(

@@ -1,9 +1,8 @@
 import {describe, it, expect} from 'bun:test';
 import {ErrorABI} from '../src';
 
-describe('#define error', () => {
+describe('error', () => {
   it('no arguments', () => {
-    // https://github.com/huff-language/huffmate/blob/main/src/tokens/ERC20.huff
     const error = new ErrorABI('NoArg');
 
     expect(error.isDeclared).toBeFalse();

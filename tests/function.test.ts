@@ -1,22 +1,30 @@
 import {describe, it, expect} from 'bun:test';
 import {FunctionABI} from '../src';
 
-describe('#define function', () => {
-  it('set owner', () => {
-    // https://github.com/huff-language/huffmate/blob/main/src/auth/Owned.huff
-    const func = new FunctionABI('setOwner', {args: ['address'], type: 'nonpayable'});
+describe('function', () => {
+  it('arguments', () => {
+    const func = new FunctionABI('args', {args: ['address'], type: 'nonpayable'});
     expect(func.isDeclared).toBeFalse();
-    expect(func.declare().decl).toBe('#define function setOwner(address) nonpayable returns ()');
+    expect(func.declare().decl).toBe('#define function args(address) nonpayable returns ()');
     expect(func.isDeclared).toBeTrue();
-    expect(func.define()).toBe('__FUNC_SIG(setOwner)');
+    expect(func.define()).toBe('__FUNC_SIG(args)');
   });
 
-  it('max', () => {
+  it('returns', () => {
     // https://github.com/huff-language/huffmate/blob/main/src/math/Math.huff
-    const func = new FunctionABI('max', {args: ['uint256', 'uint256'], type: 'pure', returns: ['uint256']});
+    const func = new FunctionABI('doesreturn', {args: ['uint256', 'uint256'], type: 'pure', returns: ['uint256']});
     expect(func.isDeclared).toBeFalse();
-    expect(func.declare().decl).toBe('#define function max(uint256, uint256) pure returns (uint256)');
+    expect(func.declare().decl).toBe('#define function doesreturn(uint256, uint256) pure returns (uint256)');
     expect(func.isDeclared).toBeTrue();
-    expect(func.define()).toBe('__FUNC_SIG(max)');
+    expect(func.define()).toBe('__FUNC_SIG(doesreturn)');
+  });
+
+  it('no type', () => {
+    // https://github.com/huff-language/huffmate/blob/main/src/math/Math.huff
+    const func = new FunctionABI('notype', {args: ['uint16'], returns: ['uint32']});
+    expect(func.isDeclared).toBeFalse();
+    expect(func.declare().decl).toBe('#define function notype(uint16) returns (uint32)');
+    expect(func.isDeclared).toBeTrue();
+    expect(func.define()).toBe('__FUNC_SIG(notype)');
   });
 });
