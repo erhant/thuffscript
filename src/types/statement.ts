@@ -4,21 +4,22 @@ import type {
   EventABI,
   FunctionABI,
   MacroCall,
-  CustomError,
+  ErrorABI,
   MacroSize,
   Table,
   Label,
   FreeStoragePointer,
-  MacroArg,
 } from '../definitions';
 
 /** A literal, usually a hexadecimal. */
 export type Literal = bigint | number;
 
 /** A statement for Huff. */
-export type Statement =
+export type Statement<A extends string = string> =
   // evm opcodes
   | OpCode
+  // macro arguments
+  | `<${A}>`
   // literals
   | Literal // numbers, hex literals
   | Constant // constant
@@ -26,20 +27,16 @@ export type Statement =
   // interfaces & abis
   | FunctionABI // function interface
   | EventABI // event interface
-  | CustomError // a custom error
+  | ErrorABI // a custom error
   // table
   | Table['size']
   | Table['start']
   // macros and fns
   | MacroCall // a macro call
   | MacroSize // macro codesize
-  | MacroArg // a macro argument
+  // | MacroArg // a macro argument
   // jump source & destination
   | Label['src']
   | Label['dest'];
 
-export type Statements = Statement[] | Statement;
-
-export type ArgStatement<A extends string | undefined> = A extends undefined ? Statement : Statement | `<${A}>`;
-
-export type ArgStatements<A extends string | undefined> = ArgStatement<A>[] | ArgStatement<A>;
+export type Statements<A extends string = string> = Statement<A>[] | Statement<A>;

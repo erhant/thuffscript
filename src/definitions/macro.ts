@@ -1,18 +1,17 @@
 import {Declarables} from '../common';
 import {Body} from '../common/body';
-import {ArgStatements, Literal, OpCode} from '../types';
+import {Literal} from '../types';
 
 /**
  * A Huff macro.
  */
-export class Macro<Args extends string | never = string | never> extends Body {
-  readonly args: Args[];
-  // readonly arg: {[arg in A]: MacroArg};
+export class Macro<A extends string = string> extends Body<A> {
+  readonly args: A[];
   readonly takes: number;
   readonly returns: number;
   readonly type: 'fn' | 'macro';
 
-  constructor(name: string, params: {args?: Args[]; takes?: number; returns?: number; fn?: true} = {}) {
+  constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true} = {}) {
     super(name);
     this.args = params.args || [];
     this.takes = params.takes || 0;
@@ -22,32 +21,30 @@ export class Macro<Args extends string | never = string | never> extends Body {
     // sort args to have a known order in declaration
     this.args.sort();
 
-    // this.arg = Object.fromEntries(this.args.map(arg => [arg, new MacroArg(this, arg)])) as typeof this.arg;
-
     // assert takes and returns is integer
     if (!Number.isInteger(this.takes) || !Number.isInteger(this.returns)) {
       throw new Error('takes and returns must be integer.');
     }
   }
 
-  call(args: {[arg in Args]: Literal}): MacroCall {
+  call(args: {[arg in A]: Literal}): MacroCall {
+    // is this a callable macro?
+    if (this.name === 'MAIN' || this.name === 'CONSTRUCTOR') {
+      throw new Error('cant call main or constructor');
+    }
+
+    // are all arguments given?
+    const keys = Object.keys(args);
+    if (keys.length !== this.args.length || !keys.every(arg => this.args.includes(arg as A))) {
+      throw new Error('invalid call arguments');
+    }
+
     return new MacroCall(this, args);
   }
 
   /** Returns a statement that yields `codesize` of the macro. */
   get size(): MacroSize {
     return new MacroSize(this);
-  }
-
-  body(...ops: ArgStatements<Args>[]) {
-    const parsedOps: typeof this.ops = ops.map(op => {
-      const curOp = Array.isArray(op) ? op : [op];
-      return curOp.map(op =>
-        typeof op === 'string' && op.startsWith('<') && op.endsWith('>') ? new MacroArg(this, op) : (op as OpCode)
-      );
-    });
-    super.ops = parsedOps;
-    return this;
   }
 
   compile(): {
@@ -93,17 +90,6 @@ export class MacroSize {
 
   define() {
     return `__codesize(${this.macro.name})`;
-  }
-}
-
-export class MacroArg {
-  constructor(
-    readonly macro: Macro,
-    readonly arg: string
-  ) {}
-
-  define() {
-    return `<${this.arg}>`;
   }
 }
 

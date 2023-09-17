@@ -1,7 +1,7 @@
 import {Declarable} from '../common';
 import {Primitive} from '../types';
 
-export class CustomError extends Declarable {
+export class ErrorABI extends Declarable {
   readonly args: Primitive[];
 
   constructor(name: string, args: Primitive[] = []) {

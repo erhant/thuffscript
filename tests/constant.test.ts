@@ -1,8 +1,8 @@
 import {describe, it, expect} from 'bun:test';
 import {Constant, FreeStoragePointer} from '../src/definitions';
 
-describe('constants', () => {
-  it('neg', () => {
+describe('#define constant', () => {
+  it('literal', () => {
     // https://github.com/huff-language/huffmate/blob/main/src/math/Math.huff
     const constant = new Constant('NEG1', 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn);
 

@@ -6,7 +6,7 @@ export {
   Constructor,
   Main,
   Macro,
-  CustomError,
+  ErrorABI,
   EventABI,
   FunctionABI,
   Label,

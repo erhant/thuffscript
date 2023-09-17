@@ -1,4 +1,4 @@
-import {Constant, CustomError, EventABI, FunctionABI} from '..';
+import {Constant, ErrorABI, EventABI, FunctionABI} from '..';
 import {FreeStoragePointer, Table} from '../definitions';
 
 export type Declaration = {
@@ -7,7 +7,7 @@ export type Declaration = {
   name: string;
 };
 
-export type Declarables = FunctionABI | Constant | FreeStoragePointer | CustomError | EventABI | Table;
+export type Declarables = FunctionABI | Constant | FreeStoragePointer | ErrorABI | EventABI | Table;
 
 export abstract class Declarable {
   /** Name of the object. */

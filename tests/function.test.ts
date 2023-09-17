@@ -1,7 +1,7 @@
 import {describe, it, expect} from 'bun:test';
 import {FunctionABI} from '../src';
 
-describe('function interfaces', () => {
+describe('#define function', () => {
   it('set owner', () => {
     // https://github.com/huff-language/huffmate/blob/main/src/auth/Owned.huff
     const func = new FunctionABI('setOwner', {args: ['address'], type: 'nonpayable'});
