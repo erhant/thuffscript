@@ -1,11 +1,13 @@
 import {Declarable} from './';
 import {Primitive} from '../types';
+import {Label} from '..';
 
 /** A function interface. */
 export class FunctionABI extends Declarable {
   readonly args: Primitive[];
   readonly returns: Primitive[];
   readonly functype: 'view' | 'payable' | 'pure' | 'nonpayable' | null;
+  readonly label: Label;
 
   constructor(
     name: string,
@@ -19,6 +21,7 @@ export class FunctionABI extends Declarable {
     this.args = params.args || [];
     this.functype = params.type || null;
     this.returns = params.returns || [];
+    this.label = new Label(name);
   }
 
   declare() {

@@ -1,4 +1,4 @@
-import {Body} from './base';
+import {Body} from './body';
 import {Literal} from '../types';
 
 /** A test. */

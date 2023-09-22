@@ -30,75 +30,13 @@ bun run build
 
 ## Usage
 
-Thuffs exposes classes for all Huff constructs:
-
-- `FunctionABI` and `EventABI` classes for function and event interfaces.
-- `Label` for jump operations
-- `Constant` for constants, and a `Literal` type for things like `0xCAFE`
-- `Macro` for `macro` (or `fn`)
-- `Main` and `Constructor` macros
-- `Table` (todo)
-
 > [!NOTE]
 >
-> **Thuffs is not a tool to test or deploy Huff contracts**! You should simply use this to write & compile to Huff; the tests can be done via Foundry or Hardhat as is the case usually.
+> **Thuffscript is not a tool to test or deploy Huff contracts**! You should simply use this to write & compile to Huff; the tests can be done via Foundry or Hardhat as is the case usually.
 
-## Example
+## Methodology
 
-Here is a Huff code (from Huff [docs](https://docs.huff.sh/tutorial/the-basics/#interacting-with-this-contract-externally)):
-
-```rs
-#define function addTwo(uint256,uint256) view returns(uint256)
-
-#define macro ADD_TWO() = takes(0) returns(0) {
-    0x04 calldataload     // load first 32 bytes onto the stack - number 1
-    0x24 calldataload     // load second 32 bytes onto the stack - number 2
-    add                   // add number 1 and 2 and put the result onto the stack
-
-    0x00 mstore           // place the result in memory
-    0x20 0x00 return      // return the result
-}
-
-#define macro MAIN() = takes(0) returns(0) {
-    // get the function selector
-    0x00 calldataload 0xE0 shr
-
-    // jump to the implementation of the ADD_TWO function if the calldata matches the function selector
-    __FUNC_SIG(addTwo) eq addTwo jumpi
-
-    addTwo:
-        ADD_TWO()
-}
-```
-
-Here is that same code in Thuffs:
-
-```ts
-import {FunctionABI, Label, Macro, Main} from './definitions';
-
-const addTwoFunc = new FunctionABI({name: 'addTwo', args: ['uint256', 'uint256'], type: 'view', returns: ['uint256']});
-const addTwoLabel = new Label('addTwo');
-
-const ADD_TWO = new Macro(
-  {name: 'ADD_TWO'},
-
-  [0x04, 'CALLDATALOAD'], // load first 32 bytes onto the stack - number 1
-  [0x24, 'CALLDATALOAD'], // load second 32 bytes onto the stack - number 2
-  'ADD', //                  add number 1 and 2 and put the result onto the stack
-  //
-  [0b00, 'MSTORE'], //       place the result in memory
-  [32, 0, 'RETURN'] //       return the result
-);
-
-const MAIN = new Main(
-  // get function selector
-  [0x00, 'CALLDATALOAD', 0xe0, 'SHR'],
-  // jump to iplementation
-  [addTwoFunc, 'EQ', addTwoLabel.src, 'JUMPI'],
-  // handle jump
-  [addTwoLabel.dest, ADD_TWO]
-);
-```
+We basically split Huff constructs into three groups:
 
 ## See also
 

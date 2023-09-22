@@ -3,7 +3,6 @@ export class Label {
   readonly name: string;
   readonly src: JumpSource;
   readonly dest: JumpDest;
-  destinationPlaced = false;
 
   constructor(name: string) {
     this.name = name;

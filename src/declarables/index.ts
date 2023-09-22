@@ -3,4 +3,4 @@ export * from './error';
 export * from './event';
 export * from './function';
 export * from './table';
-export * from './base';
+export * from './declarable';

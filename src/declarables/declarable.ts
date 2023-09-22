@@ -1,5 +1,4 @@
-import {} from '..';
-import {FreeStoragePointer, Table, Constant, ErrorABI, EventABI, FunctionABI} from './';
+import {FreeStoragePointer, Table, Constant, ErrorABI, EventABI, FunctionABI} from '.';
 
 export type Declaration = {
   type: 'function' | 'constant' | 'error' | 'event' | 'table';
