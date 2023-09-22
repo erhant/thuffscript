@@ -1,9 +1,9 @@
 import {TableSize, TableStart, Declarable, Declarables} from '../declarables';
-import {JumpSource, JumpDest} from '../definables';
+import {JumpSource, JumpDest} from '../labels';
 import {MacroCall, MacroSize, Macro} from '.';
 import {Statements} from '../types';
 
-export class Body<A extends string = string> {
+export abstract class Body<A extends string = string> {
   ops: Statements<A>[] = [];
   isCompiled = false;
 

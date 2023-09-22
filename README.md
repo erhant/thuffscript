@@ -34,12 +34,10 @@ bun run build
 >
 > **Thuffscript is not a tool to test or deploy Huff contracts**! You should simply use this to write & compile to Huff; the tests can be done via Foundry or Hardhat as is the case usually.
 
-## Methodology
-
-We basically split Huff constructs into three groups:
-
 ## See also
 
 > "I designed Huff. What the fuck is a type?"
 >
 > - [Zac Williamson, 2023](https://twitter.com/Zac_Aztec/status/1697359614692430100)
+
+- Style Guide: <https://docs.huff.sh/style-guide/overview/#formatting>

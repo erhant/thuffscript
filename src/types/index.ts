@@ -1,3 +1,3 @@
 export * from './opcodes';
 export * from './primitives';
-export * from './statement';
+export {Statements, Literal, Statement} from './statement';

@@ -1,5 +1,5 @@
-import {Declarable} from './';
-import {Literal} from '../types';
+import {Declarable} from '../declarables/declarable';
+import type {Literal} from '../types';
 
 /** A constant. */
 export class Constant extends Declarable {

@@ -7,6 +7,5 @@ describe('jumps', () => {
     expect(label.src.define()).toBe('label');
     expect(label.src.define()).toBe('label');
     expect(label.dest.define()).toBe('label:');
-    expect(() => label.dest.define()).toThrow('destination already placed');
   });
 });

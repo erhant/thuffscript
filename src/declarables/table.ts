@@ -1,5 +1,5 @@
-import {Declarable} from './';
-import {Label} from '../definables';
+import {Declarable} from '../declarables/declarable';
+import {Label} from '../labels';
 import {Literal} from '../types';
 
 /** A code / jump table. */

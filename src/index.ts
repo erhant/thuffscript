@@ -1,4 +1,4 @@
-export {Label} from './definables';
+export {Label} from './labels';
 export {
   CodeTable,
   JumpTable,
@@ -9,5 +9,7 @@ export {
   EventABI,
   FunctionABI,
 } from './declarables';
-export {Main, Macro, Test} from './bodies';
-export * from './compile';
+export {Main, Macro, Constructor, Test, MacroCall, MacroSize} from './bodies';
+export {Program} from './program';
+
+export {Literal, OpCode, Statements, Statement, Primitive} from './types';

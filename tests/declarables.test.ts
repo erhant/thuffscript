@@ -1,118 +1,117 @@
 import {describe, it, expect} from 'bun:test';
-import {Constant, FreeStoragePointer} from '../src/definables';
+import {Constant, ErrorABI, EventABI, FreeStoragePointer, FunctionABI} from '../src';
 
 describe('constant', () => {
+  it('declarable', () => {
+    const declarable = new Constant('name', 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn);
+
+    expect(declarable.isDeclared).toBeFalse();
+    const declaration = declarable.declare();
+    expect(declarable.isDeclared).toBeTrue();
+
+    expect(declaration.type).toBe('constant');
+    expect(declaration.name).toBe('name');
+    expect(declarable.define()).toBe('[name]');
+
+    expect(() => declarable.declare()).toThrow('already declared');
+  });
+
   it('literal', () => {
     const constant = new Constant('NEG1', 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn);
-
-    expect(constant.isDeclared).toBeFalse();
-    const declaration = constant.declare();
-    expect(declaration.decl).toBe(
+    expect(constant.declare().decl).toBe(
       '#define constant NEG1 = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     );
-    expect(declaration.type).toBe('constant');
-    expect(declaration.name).toBe('NEG1');
-    expect(constant.isDeclared).toBeTrue();
-
-    expect(constant.define()).toBe('[NEG1]');
   });
 
   it('free storage pointer', () => {
     const constant = new FreeStoragePointer('SLOT');
-
-    expect(constant.isDeclared).toBeFalse();
-    const declaration = constant.declare();
-    expect(declaration.decl).toBe('#define constant SLOT = FREE_STORAGE_POINTER()');
-    expect(declaration.type).toBe('constant');
-    expect(declaration.name).toBe('SLOT');
-    expect(constant.isDeclared).toBeTrue();
-
-    expect(constant.define()).toBe('[SLOT]');
+    expect(constant.declare().decl).toBe('#define constant SLOT = FREE_STORAGE_POINTER()');
   });
 });
 
 describe('error', () => {
-  it('no arguments', () => {
-    const error = new ErrorABI('NoArg');
+  it('declarable', () => {
+    const declarable = new ErrorABI('name');
 
-    expect(error.isDeclared).toBeFalse();
-    const declaration = error.declare();
-    expect(declaration.decl).toBe('#define error NoArg()');
+    expect(declarable.isDeclared).toBeFalse();
+    const declaration = declarable.declare();
+    expect(declarable.isDeclared).toBeTrue();
+
     expect(declaration.type).toBe('error');
-    expect(declaration.name).toBe('NoArg');
-    expect(error.isDeclared).toBeTrue();
+    expect(declaration.name).toBe('name');
+    expect(declarable.define()).toBe('__ERROR(name)');
 
-    expect(error.define()).toBe('__ERROR(NoArg)');
+    expect(() => declarable.declare()).toThrow('already declared');
   });
 
-  it('arguments', () => {
-    // https://github.com/huff-language/huffmate/blob/main/src/tokens/ERC20.huff
+  it('with arguments', () => {
     const error = new ErrorABI('Arg', ['uint256', 'int120']);
+    expect(error.declare().decl).toBe('#define error Arg(uint256, int120)');
+  });
 
-    expect(error.isDeclared).toBeFalse();
-    const declaration = error.declare();
-    expect(declaration.decl).toBe('#define error Arg(uint256, int120)');
-    expect(declaration.type).toBe('error');
-    expect(declaration.name).toBe('Arg');
-    expect(error.isDeclared).toBeTrue();
-
-    expect(error.define()).toBe('__ERROR(Arg)');
+  it('without arguments', () => {
+    const error = new ErrorABI('NoArg');
+    expect(error.declare().decl).toBe('#define error NoArg()');
   });
 });
 
 describe('event', () => {
+  it('declarable', () => {
+    const declarable = new EventABI('name');
+
+    expect(declarable.isDeclared).toBeFalse();
+    const declaration = declarable.declare();
+    expect(declarable.isDeclared).toBeTrue();
+
+    expect(declaration.type).toBe('event');
+    expect(declaration.name).toBe('name');
+    expect(declarable.define()).toBe('__EVENT_HASH(name)');
+
+    expect(() => declarable.declare()).toThrow('already declared');
+  });
+
   it('arguments', () => {
     const event = new EventABI('Args', ['address', 'address indexed', 'uint256']);
-
-    expect(event.isDeclared).toBeFalse();
-    const declaration = event.declare();
-    expect(declaration.decl).toBe('#define event Args(address, address indexed, uint256)');
-    expect(declaration.type).toBe('event');
-    expect(declaration.name).toBe('Args');
-    expect(event.isDeclared).toBeTrue();
-
+    expect(event.declare().decl).toBe('#define event Args(address, address indexed, uint256)');
     expect(event.define()).toBe('__EVENT_HASH(Args)');
   });
 
   it('no arguments', () => {
     const event = new EventABI('NoArgs');
-
-    expect(event.isDeclared).toBeFalse();
-    const declaration = event.declare();
-    expect(declaration.decl).toBe('#define event NoArgs()');
-    expect(declaration.type).toBe('event');
-    expect(declaration.name).toBe('NoArgs');
-    expect(event.isDeclared).toBeTrue();
-
+    expect(event.declare().decl).toBe('#define event NoArgs()');
     expect(event.define()).toBe('__EVENT_HASH(NoArgs)');
   });
 });
 
 describe('function', () => {
-  it('arguments', () => {
+  it('declarable', () => {
+    const declarable = new FunctionABI('name');
+
+    expect(declarable.isDeclared).toBeFalse();
+    const declaration = declarable.declare();
+    expect(declarable.isDeclared).toBeTrue();
+
+    expect(declaration.type).toBe('function');
+    expect(declaration.name).toBe('name');
+    expect(declarable.define()).toBe('__FUNC_SIG(name)');
+
+    expect(() => declarable.declare()).toThrow('already declared');
+  });
+
+  it('with arguments', () => {
     const func = new FunctionABI('args', {args: ['address'], type: 'nonpayable'});
-    expect(func.isDeclared).toBeFalse();
     expect(func.declare().decl).toBe('#define function args(address) nonpayable returns ()');
-    expect(func.isDeclared).toBeTrue();
     expect(func.define()).toBe('__FUNC_SIG(args)');
   });
 
-  it('returns', () => {
-    // https://github.com/huff-language/huffmate/blob/main/src/math/Math.huff
+  it('with returns', () => {
     const func = new FunctionABI('doesreturn', {args: ['uint256', 'uint256'], type: 'pure', returns: ['uint256']});
-    expect(func.isDeclared).toBeFalse();
     expect(func.declare().decl).toBe('#define function doesreturn(uint256, uint256) pure returns (uint256)');
-    expect(func.isDeclared).toBeTrue();
-    expect(func.define()).toBe('__FUNC_SIG(doesreturn)');
   });
 
-  it('no type', () => {
-    // https://github.com/huff-language/huffmate/blob/main/src/math/Math.huff
+  it('no function type', () => {
     const func = new FunctionABI('notype', {args: ['uint16'], returns: ['uint32']});
-    expect(func.isDeclared).toBeFalse();
     expect(func.declare().decl).toBe('#define function notype(uint16) returns (uint32)');
-    expect(func.isDeclared).toBeTrue();
-    expect(func.define()).toBe('__FUNC_SIG(notype)');
   });
 });
 

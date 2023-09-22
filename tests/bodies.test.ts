@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'bun:test';
-import {Macro} from '../src';
+import {Macro, Test} from '../src';
 
 describe('macro', () => {
   it('arguments', () => {
@@ -50,17 +50,12 @@ describe('#define test', () => {
   });
 
   it('with value', () => {
-    // prettier-ignore
     const test = new Test('WithValue', {
-      value: 0x9999
-    }).body(
-      0x1, 
-      0x2,
-    );
+      value: 0x9999,
+    }).body([0x1, 0x2]);
     expect(test.compile().body).toBe(`#[value(0x9999)]
 #define test WithValue() = {
-    0x1
-    0x2
+    0x1 0x2
 }`);
   });
 
@@ -82,15 +77,17 @@ describe('#define test', () => {
   it('with value & calldata', () => {
     // prettier-ignore
     const test = new Test('WithAll', {
-      calldata: 0xDEADBEEF,
+      calldata: 0xcafe1234,
       value: 0x9999
     }).body(
       0x1, 
+      [],
       0x2,
     );
-    expect(test.compile().body).toBe(`#[calldata("0xdeadbeef"), value(0x9999)]
+    expect(test.compile().body).toBe(`#[calldata("0xcafe1234"), value(0x9999)]
 #define test WithAll() = {
     0x1
+    
     0x2
 }`);
   });

@@ -1,4 +1,4 @@
-import {Declarable} from './';
+import {Declarable} from '../declarables/declarable';
 import {Primitive} from '../types';
 import {Label} from '..';
 
@@ -7,6 +7,7 @@ export class FunctionABI extends Declarable {
   readonly args: Primitive[];
   readonly returns: Primitive[];
   readonly functype: 'view' | 'payable' | 'pure' | 'nonpayable' | null;
+  /** A label with the name of this function, for utility purposes. */
   readonly label: Label;
 
   constructor(
@@ -21,7 +22,7 @@ export class FunctionABI extends Declarable {
     this.args = params.args || [];
     this.functype = params.type || null;
     this.returns = params.returns || [];
-    this.label = new Label(name);
+    this.label = new Label(name + '_func');
   }
 
   declare() {
