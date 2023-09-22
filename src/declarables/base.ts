@@ -1,5 +1,5 @@
-import {Constant, ErrorABI, EventABI, FunctionABI} from '..';
-import {FreeStoragePointer, Table} from '../definitions';
+import {} from '..';
+import {FreeStoragePointer, Table, Constant, ErrorABI, EventABI, FunctionABI} from './';
 
 export type Declaration = {
   type: 'function' | 'constant' | 'error' | 'event' | 'table';
@@ -7,6 +7,7 @@ export type Declaration = {
   name: string;
 };
 
+// TODO: move this elsewhere
 export type Declarables = FunctionABI | Constant | FreeStoragePointer | ErrorABI | EventABI | Table;
 
 export abstract class Declarable {

@@ -1,15 +1,4 @@
-export {
-  CodeTable,
-  JumpTable,
-  PackedJumpTable,
-  Constant,
-  Constructor,
-  Main,
-  Macro,
-  ErrorABI,
-  EventABI,
-  FunctionABI,
-  Label,
-  Test,
-} from './definitions';
+export {Label} from './definables';
+export {CodeTable, JumpTable, PackedJumpTable, Constant, ErrorABI, EventABI, FunctionABI} from './declarables';
+export {Main, Macro, Test} from './bodies';
 export * from './compile';

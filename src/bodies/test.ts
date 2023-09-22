@@ -1,6 +1,4 @@
-import {Macro} from '.';
-import {Declarables} from '../common';
-import {Body} from '../common/body';
+import {Body} from './base';
 import {Literal} from '../types';
 
 /** A test. */
@@ -12,17 +10,14 @@ export class Test extends Body {
     super(name);
   }
 
-  compile(): {
-    body: string;
-    declarables: Declarables[];
-    macros: Macro[];
-  } {
-    const comp = super.compile();
+  compile() {
     const decoratorDefinitions = [
       this.decorators.calldata ? `calldata("0x${this.decorators.calldata.toString(16)}")` : null,
       this.decorators.value ? `value(0x${this.decorators.value.toString(16)})` : null,
     ].filter(d => d !== null) as string[];
     const decoratorString = decoratorDefinitions.length > 0 ? `#[${decoratorDefinitions.join(', ')}]\n` : '';
+
+    const comp = super.compile();
     return {
       body: `${decoratorString}#define test ${this.name}() = {
     ${comp.body}

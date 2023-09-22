@@ -1,0 +1,12 @@
+{
+  // https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/main/images/folderIcons.png
+  "material-icon-theme.folders.associations": {
+    "bodies": "app",
+    "declarables": "custom",
+    "definables": "mock"
+  },
+  // https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/main/images/fileIcons.png
+  "material-icon-theme.files.associations": {
+    "index.ts": "Typescript-def"
+  }
+}

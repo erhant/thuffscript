@@ -1,4 +1,4 @@
-import {Declarable} from '../common';
+import {Declarable} from './';
 import {Literal} from '../types';
 
 /** A constant. */

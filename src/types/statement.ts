@@ -1,15 +1,7 @@
 import type {OpCode} from '.';
-import type {
-  Constant,
-  EventABI,
-  FunctionABI,
-  MacroCall,
-  ErrorABI,
-  MacroSize,
-  Table,
-  Label,
-  FreeStoragePointer,
-} from '../definitions';
+import type {Constant, EventABI, FunctionABI, ErrorABI, Table, FreeStoragePointer} from '../declarables';
+import type {Label} from '../definables';
+import type {MacroCall, MacroSize} from '../bodies';
 
 /** A literal, usually a hexadecimal. */
 export type Literal = bigint | number;

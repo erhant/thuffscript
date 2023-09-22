@@ -1,5 +1,6 @@
-import {Declarable, Declarables} from '.';
-import {TableSize, TableStart, JumpSource, JumpDest, MacroCall, MacroSize, Macro} from '../definitions';
+import {TableSize, TableStart, Declarable, Declarables} from '../declarables';
+import {JumpSource, JumpDest} from '../definables';
+import {MacroCall, MacroSize, Macro} from '../bodies';
 import {Statements} from '../types';
 
 export class Body<A extends string = string> {

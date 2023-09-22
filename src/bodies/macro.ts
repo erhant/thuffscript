@@ -1,5 +1,5 @@
-import {Declarables} from '../common';
-import {Body} from '../common/body';
+import {Declarables} from '../declarables';
+import {Body} from './base';
 import {Literal} from '../types';
 
 /** A macro / fn. */
@@ -45,11 +45,7 @@ export class Macro<A extends string = string> extends Body<A> {
     return new MacroSize(this);
   }
 
-  compile(): {
-    body: string;
-    declarables: Declarables[];
-    macros: Macro[];
-  } {
+  compile() {
     const comp = super.compile();
     return {
       // prettier-ignore

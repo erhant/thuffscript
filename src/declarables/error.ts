@@ -1,4 +1,4 @@
-import {Declarable} from '../common';
+import {Declarable} from './';
 import {Primitive} from '../types';
 
 /** A custom error interface. */

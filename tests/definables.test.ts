@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'bun:test';
-import {Label} from '../src/';
+import {Label} from '../src';
 
 describe('jumps', () => {
   it('source & destination', () => {

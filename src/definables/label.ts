@@ -15,11 +15,8 @@ export class Label {
 export class JumpDest {
   constructor(readonly label: Label) {}
 
+  // NOTE: may provide `Body` here to keep track of placed bodies
   define() {
-    if (this.label.destinationPlaced) {
-      throw new Error('destination already placed');
-    }
-    this.label.destinationPlaced = true;
     return `${this.label.name}:`;
   }
 }

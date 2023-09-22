@@ -1,5 +1,3 @@
-// https://github.com/huff-language/huffmate/blob/main/src/utils/Address.huff
-
 import {Label, Macro, compile} from '../src';
 
 const addressMatchLabel = new Label('addresses_match');

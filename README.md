@@ -1,6 +1,6 @@
 <p align="center">
   <h1 align="center">
-    <code>thuffs</code>
+    <code>thuffscript</code>
   </h1>
 
 <div align="center">
