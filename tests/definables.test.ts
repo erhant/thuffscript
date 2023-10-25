@@ -1,7 +1,7 @@
 import {describe, it, expect} from 'bun:test';
 import {Label} from '../src';
 
-describe('jump labels', () => {
+describe('labels', () => {
   it('source & destination', () => {
     const label = new Label('label');
     expect(label.src.define()).toBe('label');

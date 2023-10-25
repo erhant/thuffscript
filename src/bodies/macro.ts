@@ -1,19 +1,19 @@
 import {Body} from './body';
 import {Literal} from '../types';
 
-/** A macro / fn. */
+/** A `macro`. */
 export class Macro<A extends string = string> extends Body<A> {
   readonly args: A[];
   readonly takes: number;
   readonly returns: number;
-  readonly type: 'fn' | 'macro';
+  protected type: 'fn' | 'macro';
 
-  constructor(name: string, params: {args?: A[]; takes?: number; returns?: number; fn?: true} = {}) {
+  constructor(name: string, params: {args?: A[]; takes?: number; returns?: number} = {}) {
     super(name);
+    this.type = 'macro';
     this.args = params.args || [];
     this.takes = params.takes || 0;
     this.returns = params.returns || 0;
-    this.type = params.fn ? 'fn' : 'macro';
 
     // sort args to have a known order in declaration
     this.args.sort();

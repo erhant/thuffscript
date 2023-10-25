@@ -1,13 +1,4 @@
-import {FreeStoragePointer, Table, Constant, ErrorABI, EventABI, FunctionABI} from '.';
-
-export type Declaration = {
-  type: 'function' | 'constant' | 'error' | 'event' | 'table';
-  decl: string;
-  name: string;
-};
-
-// TODO: move this elsewhere
-export type Declarables = FunctionABI | Constant | FreeStoragePointer | ErrorABI | EventABI | Table;
+import type {Declaration} from '.';
 
 export abstract class Declarable {
   /** Name of the object. */

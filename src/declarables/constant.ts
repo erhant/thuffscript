@@ -19,6 +19,7 @@ export class Constant extends Declarable {
   }
 }
 
+/** A shorthand construct for `FREE_STORAGE_POINTER()` constant. */
 export class FreeStoragePointer extends Declarable {
   constructor(name: string) {
     super(name, 'constant');

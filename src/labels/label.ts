@@ -14,7 +14,6 @@ export class Label {
 export class JumpDest {
   constructor(readonly label: Label) {}
 
-  // NOTE: may provide `Body` here to keep track of placed bodies
   define() {
     return `${this.label.name}:`;
   }

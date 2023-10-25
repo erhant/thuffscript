@@ -1,7 +1,7 @@
 import {Body} from './body';
 import {Literal} from '../types';
 
-/** A test. */
+/** A `test`. */
 export class Test extends Body {
   constructor(
     name: string,

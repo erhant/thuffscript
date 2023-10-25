@@ -115,7 +115,7 @@ describe('function', () => {
   });
 });
 
-describe('tables', () => {
+describe.todo('tables', () => {
   it('jumptable', () => {
     //
   });

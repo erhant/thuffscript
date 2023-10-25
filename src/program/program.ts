@@ -1,3 +1,4 @@
+import {writeFile} from 'fs/promises';
 import {Body} from '../bodies';
 import {Declaration} from '../declarables';
 
@@ -123,7 +124,7 @@ ${bodies.reverse().join('\n\n')}
       this.compile();
     }
 
-    await Bun.write(path, this.code!);
+    await writeFile(path, this.code!);
 
     return this;
   }
