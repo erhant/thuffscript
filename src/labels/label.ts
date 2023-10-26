@@ -11,6 +11,7 @@ export class Label {
   }
 }
 
+/** A jump destination. */
 export class JumpDest {
   constructor(readonly label: Label) {}
 
@@ -19,6 +20,7 @@ export class JumpDest {
   }
 }
 
+/** A jump source. */
 export class JumpSource {
   constructor(readonly label: Label) {}
 

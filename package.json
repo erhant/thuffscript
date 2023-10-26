@@ -6,7 +6,8 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "example:add": "bun run ./examples/add.ts",
+    "example:addr": "bun run ./examples/Address.ts",
+    "example:ss": "bun run ./examples/SimpleStore.ts",
     "build": "bun build ./src/index.ts --outdir ./build --target node",
     "huff": "huffc -b",
     "format": "prettier --check '**/*.ts'",

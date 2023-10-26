@@ -1,13 +1,10 @@
-import {Macro, Program, FunctionABI, FreeStoragePointer, Main, MacroCall, Statements} from '../src';
+import {Macro, Program, FunctionABI, FreeStoragePointer, Main, Statements, MacroCall} from '../src';
 
-// interface
 const setValue = new FunctionABI('setValue', {args: ['uint256'], type: 'nonpayable'});
 const getValue = new FunctionABI('getValue', {returns: ['uint256'], type: 'view'});
-
-// storage slots
 const VALUE_LOCATION = new FreeStoragePointer('VALUE_LOCATION');
 
-// methods
+// macros
 const SET_VALUE = new Macro('SET_VALUE').body(
   [0x04, 'calldataload'], // [value]
   VALUE_LOCATION, //         [ptr, value]
@@ -25,24 +22,26 @@ const GET_VALUE = new Macro('GET_VALUE').body(
   [0x20, 0x00, 'return']
 );
 
-// a small utility
-function macrofunc(func: FunctionABI, call: MacroCall) {
+// some utilities, since we are in JS world now :)
+function macrofunc(func: FunctionABI, call: MacroCall): {dispatch: Statements; handle: Statements} {
   return {
-    dispatch: ['dup1', func, 'eq', func.label.src, 'jumpi'] as Statements,
-    handle: [func.label.dest, call] as Statements,
+    dispatch: ['dup1', func, 'eq', func.label.src, 'jumpi'],
+    handle: [func.label.dest, call],
   };
 }
 const setValueMacrofunc = macrofunc(setValue, SET_VALUE.call({}));
+const getValueMacroFunc = macrofunc(getValue, GET_VALUE.call({}));
+const revert: Statements = [0x00, 0x00, 'revert'];
 
 const MAIN = new Main().body(
   [0x00, 'calldataload', 0xe0, 'shr'],
   setValueMacrofunc.dispatch,
-  ['dup1', getValue, 'eq', getValue.label.src, 'jumpi'],
+  getValueMacroFunc.dispatch,
   [],
-  [0x00, 0x00, 'revert'],
+  revert,
   [],
   setValueMacrofunc.handle,
-  [getValue.label.dest, GET_VALUE.call({})]
+  getValueMacroFunc.handle
 );
 
 new Program(MAIN)

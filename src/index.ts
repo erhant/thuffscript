@@ -9,7 +9,7 @@ export {
   EventABI,
   FunctionABI,
 } from './declarables';
-export {Main, Macro, Constructor, Test} from './compilables';
+export {Main, Macro, MacroCall, MacroSize, Constructor, Test} from './compilables';
 export {Program} from './program';
 
 export type {Literal, OpCode, Statements, Statement, Primitive} from './types';

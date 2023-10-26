@@ -7,6 +7,8 @@ export class Program {
   entries: Compilable[];
   code: string | undefined;
 
+  constructor(entry: Compilable[]);
+  constructor(entry: Compilable);
   constructor(entry: Compilable | Compilable[]) {
     this.entries = Array.isArray(entry) ? entry : [entry];
   }

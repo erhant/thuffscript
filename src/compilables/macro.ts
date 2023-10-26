@@ -24,6 +24,9 @@ export class Macro<A extends string = string> extends Compilable<A> {
     }
   }
 
+  /** Returns a macro call (invocation) with given arguments.
+   *
+   * If there are no arguments, use as `call({})`. */
   call(args: {[arg in A]: Literal}): MacroCall {
     // is this a callable macro?
     if (this.name === 'MAIN' || this.name === 'CONSTRUCTOR') {
