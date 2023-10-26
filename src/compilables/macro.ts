@@ -58,10 +58,9 @@ export class Macro<A extends string = string> extends Compilable<A> {
 }
 
 /**
- * A call to a Huff macro with given arguments.
+ * A call to a macro with given arguments.
  *
- * This should never be called directly, but instead via the function
- * returned by `body` method of `Macro`.
+ * This should never be called directly, but instead accessed via `Macro`.
  */
 export class MacroCall {
   readonly sortedKeys: string[];
@@ -78,6 +77,11 @@ export class MacroCall {
   }
 }
 
+/**
+ * Get size of a macro.
+ *
+ * This should never be called directly, but instead accessed via `Macro`.
+ */
 export class MacroSize {
   constructor(readonly macro: Macro) {}
 
@@ -86,12 +90,14 @@ export class MacroSize {
   }
 }
 
+/** Main entry to the program. */
 export class Main extends Macro {
   constructor() {
     super('MAIN');
   }
 }
 
+/** A constructor that is called upon contract deployment. */
 export class Constructor extends Macro {
   constructor() {
     super('CONSTRUCTOR');

@@ -16,7 +16,7 @@ export abstract class Declarable {
     this.type = type;
   }
 
-  /** Object definition */
+  /** Object definition. */
   abstract define(): string;
 
   /** Object declaration.
