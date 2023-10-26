@@ -1,8 +1,8 @@
-import {Body} from './body';
+import {Compilable} from './compilable';
 import {Literal} from '../types';
 
 /** A `macro`. */
-export class Macro<A extends string = string> extends Body<A> {
+export class Macro<A extends string = string> extends Compilable<A> {
   readonly args: A[];
   readonly takes: number;
   readonly returns: number;

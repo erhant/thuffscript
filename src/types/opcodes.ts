@@ -1,4 +1,4 @@
-import type {_1_16, _1_32, _1_4} from './util';
+import type {_1_16, _1_32, _1_4} from './range';
 
 /** All EVM [opcodes](https://www.evm.codes/), Shanghai version. */
 // prettier-ignore
@@ -36,8 +36,8 @@ export type OpCode =
 // Jumps, PC, MSIZE and GAS
 `jump${''|'i'|'dest'}` | 'pc' | 'msize' | 'gas' |
 // Push, Dup and Swap
-// TODO: do not use
-`push${_1_32 | 0}` | `dup${_1_16}` | `swap${_1_16}` |
+// `push${_1_32 | 0}` | // NOTE: we do not use PUSH instructions for Huff
+`dup${_1_16}` | `swap${_1_16}` |
 // Log
 `log${_1_4 | 0}` |
 // Creates and calls

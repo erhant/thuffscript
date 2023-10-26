@@ -3,7 +3,12 @@ import {JumpSource, JumpDest} from '../labels';
 import {MacroCall, MacroSize, Macro} from '.';
 import {Statements} from '../types';
 
-export abstract class Body<A extends string = string> {
+/** A compilable Huff expression.
+ *
+ * Unlike the declarable onces, these expressions have instructions within their bodies, which may
+ * refer to other compilables or declarables.
+ */
+export abstract class Compilable<A extends string = string> {
   ops: Statements<A>[] = [];
   isCompiled = false;
 

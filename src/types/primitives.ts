@@ -1,4 +1,6 @@
-import type {_1_32, _8_256} from './util';
+import type {_1_32, _8_256} from './range';
+
+// also relevant: https://github.com/huff-language/huff-rs/blob/main/huff_utils/src/types.rs#L9
 
 /** Primitive data types. */
 type SinglePrimitive =
@@ -8,8 +10,10 @@ type SinglePrimitive =
   | `${'' | 'u'}int${'' | _8_256}`
   // address
   | 'address'
-  | 'address payable' // TODO: is it ok to do payable like this?
   // bytes
   | `bytes${_1_32 | ''}`;
 
-export type Primitive = SinglePrimitive | `${SinglePrimitive}[${bigint | ''}]`;
+/** An array primitive type. */
+type ArrayPrimitive = `${SinglePrimitive}[${bigint | ''}]`;
+
+export type Primitive = SinglePrimitive | ArrayPrimitive | 'address payable'; // TODO: is it ok to do payable like this?;

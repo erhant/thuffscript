@@ -1,8 +1,8 @@
-import {Body} from './body';
+import {Compilable} from './compilable';
 import {Literal} from '../types';
 
 /** A `test`. */
-export class Test extends Body {
+export class Test extends Compilable {
   constructor(
     name: string,
     readonly decorators: {[decorator in 'calldata' | 'value']?: Literal} = {}

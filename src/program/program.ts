@@ -1,13 +1,13 @@
 import {writeFile} from 'fs/promises';
-import {Body} from '../bodies';
+import {Compilable} from '../compilables';
 import {Declaration} from '../declarables';
 
 /** A Huff program. */
 export class Program {
-  entries: Body[];
+  entries: Compilable[];
   code: string | undefined;
 
-  constructor(entry: Body | Body[]) {
+  constructor(entry: Compilable | Compilable[]) {
     this.entries = Array.isArray(entry) ? entry : [entry];
   }
 
