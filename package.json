@@ -1,23 +1,56 @@
 {
   "name": "thuffscript",
   "author": "erhant",
-  "type": "module",
-  "module": "src/index.ts",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "example:addr": "bun run ./examples/Address.ts",
-    "example:ss": "bun run ./examples/SimpleStore.ts",
-    "build": "bun build ./src/index.ts --outdir ./build --target node",
+    "eg:AddConstant": "bun run ./examples/AddConstant.ts",
+    "eg:Address": "bun run ./examples/Address.ts",
+    "eg:SimpleStore": "bun run ./examples/SimpleStore.ts",
+    "build:bun": "bun build ./src/index.ts --outdir ./dist --target node",
+    "build": "bunx parcel build",
+    "prebuild": "bun run format && bun run lint",
     "huff": "huffc -b",
     "format": "prettier --check '**/*.ts'",
-    "lint": "eslint '**/*.ts'"
+    "lint": "eslint '**/*.ts'",
+    "check": "bunx tsc --noEmit"
   },
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "cjs": "dist/index.cjs",
+  "mjs": "dist/index.mjs",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.mjs"
+  },
+  "targets": {
+    "cjs": {
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "context": "node"
+    },
+    "mjs": {
+      "outputFormat": "esmodule",
+      "isLibrary": true,
+      "context": "node"
+    }
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
   "devDependencies": {
+    "@parcel/packager-ts": "^2.10.1",
+    "@parcel/transformer-typescript-tsc": "^2.10.1",
+    "@parcel/transformer-typescript-types": "^2.10.1",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "bun-types": "latest",
     "eslint": "^8.49.0",
+    "parcel": "^2.10.1",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },

@@ -1,7 +1,7 @@
 import {Declarable} from '../declarables/declarable';
 import {Primitive} from '../types';
 
-/** An event interface. */
+/** An [event interface](https://docs.huff.sh/get-started/huff-by-example/#defining-your-interface). */
 export class EventABI extends Declarable {
   constructor(
     name: string,

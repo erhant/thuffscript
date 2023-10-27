@@ -1,7 +1,7 @@
 import {Compilable} from './compilable';
 import {Literal} from '../types';
 
-/** A `test`. */
+/** A [test](https://docs.huff.sh/get-started/huff-by-example/#huff-tests). */
 export class Test extends Compilable {
   constructor(
     name: string,
@@ -11,9 +11,10 @@ export class Test extends Compilable {
   }
 
   compile() {
+    const {calldata, value} = this.decorators;
     const decoratorDefinitions = [
-      this.decorators.calldata ? `calldata("0x${this.decorators.calldata.toString(16)}")` : null,
-      this.decorators.value ? `value(0x${this.decorators.value.toString(16)})` : null,
+      calldata ? `calldata("0x${calldata.toString(16)}")` : null,
+      value ? `value(0x${value.toString(16)})` : null,
     ].filter(d => d !== null) as string[];
     const decoratorString = decoratorDefinitions.length > 0 ? `#[${decoratorDefinitions.join(', ')}]\n` : '';
 

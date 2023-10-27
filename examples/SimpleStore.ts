@@ -8,7 +8,8 @@ const VALUE_LOCATION = new FreeStoragePointer('VALUE_LOCATION');
 const SET_VALUE = new Macro('SET_VALUE').body(
   [0x04, 'calldataload'], // [value]
   VALUE_LOCATION, //         [ptr, value]
-  'sstore' //                []
+  'sstore', //               []
+  'stop'
 );
 const GET_VALUE = new Macro('GET_VALUE').body(
   // load value from storage
@@ -44,10 +45,14 @@ const MAIN = new Main().body(
   getValueMacroFunc.handle
 );
 
-new Program(MAIN)
-  .compile({
-    title: 'Simple Store',
-    authors: ['https://github.com/huff-language/huff-project-template'],
-    comments: ['https://github.com/huff-language/huff-project-template/blob/main/src/SimpleStore.huff'],
-  })
-  .export('./examples/SimpleStore.huff');
+const program = new Program(MAIN).compile({
+  title: 'Simple Store',
+  authors: ['https://github.com/huff-language/huff-project-template'],
+  comments: ['https://github.com/huff-language/huff-project-template/blob/main/src/SimpleStore.huff'],
+});
+
+export default program;
+
+if (import.meta.main) {
+  await program.export('./examples/SimpleStore.huff');
+}

@@ -6,7 +6,11 @@ import type {MacroCall, MacroSize} from '../compilables';
 /** A literal, usually a hexadecimal. */
 export type Literal = bigint | number;
 
-/** A statement for Huff. */
+/** A statement for Huff.
+ *
+ * @template `A`: type of arguments, used when a macro has arguments. If provides
+ * auto-complete for `<arg>` strings. In most cases you can omit this parameter.
+ */
 export type Statement<A extends string = string> =
   // evm opcodes
   | OpCode
@@ -30,4 +34,7 @@ export type Statement<A extends string = string> =
   | Label['src']
   | Label['dest'];
 
+/**
+ * An array of `Statement` types, or a single `Statement`.
+ */
 export type Statements<A extends string = string> = Statement<A>[] | Statement<A>;

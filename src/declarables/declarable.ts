@@ -12,6 +12,9 @@ export abstract class Declarable {
   isDeclared: boolean = false;
 
   constructor(name: string, type: Declaration['type']) {
+    if (name === '') {
+      throw new Error('name cant be empty');
+    }
     this.name = name;
     this.type = type;
   }

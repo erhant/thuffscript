@@ -1,4 +1,4 @@
-import {Constant, ErrorABI, EventABI, FreeStoragePointer, FunctionABI, Table} from '.';
+import {CodeTable, Constant, ErrorABI, EventABI, FreeStoragePointer, FunctionABI, JumpTable, PackedJumpTable} from '.';
 
 export type Declaration = {
   type: 'function' | 'constant' | 'error' | 'event' | 'table';
@@ -6,4 +6,12 @@ export type Declaration = {
   name: string;
 };
 
-export type Declarables = FunctionABI | Constant | FreeStoragePointer | ErrorABI | EventABI | Table;
+export type Declarables =
+  | FunctionABI
+  | Constant
+  | FreeStoragePointer
+  | ErrorABI
+  | EventABI
+  | CodeTable
+  | JumpTable
+  | PackedJumpTable;

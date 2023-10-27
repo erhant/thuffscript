@@ -1,4 +1,4 @@
-import type {_1_16, _1_32, _1_4} from './range';
+import type {_1_16, _1_4} from './range';
 
 /** All EVM [opcodes](https://www.evm.codes/), Shanghai version. */
 // prettier-ignore

@@ -2,6 +2,12 @@ import {describe, expect, test} from 'bun:test';
 import {Macro} from '../src';
 
 describe('macro', () => {
+  test('size', () => {
+    const macro = new Macro('MacroSize').body(0xaa);
+    const size = macro.size;
+    expect(size.define()).toBe(`__codesize(MacroSize)`);
+  });
+
   test('arguments', () => {
     // prettier-ignore
     const code = new Macro('WithArgs', {args: ['foo', 'bar']}).body(

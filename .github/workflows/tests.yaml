@@ -1,0 +1,23 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: Tests with Bun
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Install packages
+        run: bun install
+
+      - name: Linting & Formatting
+        run: bun run lint && bun run format
+
+      - name: Run tests
+        run: bun test

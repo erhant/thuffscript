@@ -1,7 +1,7 @@
 import {Declarable} from '../declarables/declarable';
 import {Primitive} from '../types';
 
-/** A custom error interface. */
+/** A [custom error](https://docs.huff.sh/get-started/huff-by-example/#custom-errors). */
 export class ErrorABI extends Declarable {
   readonly args: Primitive[];
 

@@ -15,14 +15,18 @@ const REQUIRE_ADD = new Macro('REQUIRE_ADDR', {takes: 1}).body(
   addressMatchLabel.dest
 );
 
-new Program(REQUIRE_ADD)
-  .compile({
-    title: 'Address',
-    authors: ['Jet <https://github.com/JetJadeja>'],
-    comments: [
-      'Macros associated with addresses',
-      'https://github.com/huff-language/huffmate/blob/main/src/utils/Address.huff',
-    ],
-    license: 'MIT',
-  })
-  .export('./examples/Address.huff');
+const program = new Program(REQUIRE_ADD).compile({
+  title: 'Address',
+  authors: ['Jet <https://github.com/JetJadeja>'],
+  comments: [
+    'Macros associated with addresses',
+    'https://github.com/huff-language/huffmate/blob/main/src/utils/Address.huff',
+  ],
+  license: 'MIT',
+});
+
+export default program;
+
+if (import.meta.main) {
+  await program.export('./examples/Address.huff');
+}

@@ -26,5 +26,6 @@ describe('constant', () => {
   test('free storage pointer', () => {
     const constant = new FreeStoragePointer('SLOT');
     expect(constant.declare().decl).toBe('#define constant SLOT = FREE_STORAGE_POINTER()');
+    expect(constant.define()).toBe('[SLOT]');
   });
 });

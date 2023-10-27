@@ -1,7 +1,19 @@
 import {Compilable} from './compilable';
 import {Literal} from '../types';
 
-/** A `macro`. */
+/** A [macro](https://docs.huff.sh/get-started/huff-by-example/#macros).
+ *
+ * - To get the macro size, use: `macro.size`
+ * - To call a macro, use: `macro.call()`
+ *
+ * When you are defining a macro, use the following format:
+ *
+ * ```ts
+ * const foo = new Macro('foo').body(
+ *    // instructions
+ * )
+ * ```
+ */
 export class Macro<A extends string = string> extends Compilable<A> {
   readonly args: A[];
   readonly takes: number;
@@ -24,7 +36,7 @@ export class Macro<A extends string = string> extends Compilable<A> {
     }
   }
 
-  /** Returns a macro call (invocation) with given arguments.
+  /** Returns a macro/fn call (invocation) with given arguments.
    *
    * If there are no arguments, use as `call({})`. */
   call(args: {[arg in A]: Literal}): MacroCall {
@@ -42,7 +54,7 @@ export class Macro<A extends string = string> extends Compilable<A> {
     return new MacroCall(this, args);
   }
 
-  /** Returns a statement that yields `codesize` of the macro. */
+  /** Returns a statement that yields `codesize` of the macro/fn. */
   get size(): MacroSize {
     return new MacroSize(this);
   }

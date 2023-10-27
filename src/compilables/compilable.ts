@@ -7,6 +7,14 @@ import {Statements} from '../types';
  *
  * Unlike the declarable onces, these expressions have instructions within their bodies, which may
  * refer to other compilables or declarables.
+ *
+ * In general form they look like this:
+ *
+ * ```c
+ * #define FOO() = {
+ *    // instructions
+ * }
+ * ```
  */
 export abstract class Compilable<A extends string = string> {
   ops: Statements<A>[] = [];
@@ -14,11 +22,13 @@ export abstract class Compilable<A extends string = string> {
 
   constructor(readonly name: string) {}
 
+  // TODO: doc
   body(...ops: Statements<A>[]) {
     this.ops = ops;
     return this;
   }
 
+  // TODO: doc
   compile(): {
     body: string;
     declarables: Declarables[];
