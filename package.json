@@ -1,7 +1,7 @@
 {
   "name": "thuffscript",
   "author": "erhant",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "scripts": {
     "eg:AddConstant": "bun run ./examples/AddConstant.ts",
