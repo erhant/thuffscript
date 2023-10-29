@@ -47,7 +47,11 @@ export class TableSize {
   }
 }
 
-/** A [jump table](https://docs.huff.sh/get-started/huff-by-example/#jump-tables). */
+/** A [jump table](https://docs.huff.sh/get-started/huff-by-example/#jump-tables).
+ *
+ * @param name name of the jump table
+ * @param jumps an array of jump labels
+ */
 export class JumpTable extends Table {
   constructor(name: string, jumps: Label[]) {
     super(
@@ -59,7 +63,11 @@ export class JumpTable extends Table {
   }
 }
 
-/** A packed [jump table](https://docs.huff.sh/get-started/huff-by-example/#jump-tables). */
+/** A packed [jump table](https://docs.huff.sh/get-started/huff-by-example/#jump-tables).
+ *
+ * @param name name of the packed jump table
+ * @param jumps an array of jump labels
+ */
 export class PackedJumpTable extends Table {
   constructor(name: string, jumps: Label[]) {
     super(
@@ -71,9 +79,14 @@ export class PackedJumpTable extends Table {
   }
 }
 
-/** A [code table](https://docs.huff.sh/get-started/huff-by-example/#code-tables). */
+/** A [code table](https://docs.huff.sh/get-started/huff-by-example/#code-tables).
+ *
+ * @param name name of the code table
+ * @param code value within the table, accepts an integer (number or bigint) or a string
+ * of an hexadecimal
+ */
 export class CodeTable extends Table {
-  constructor(name: string, code: Literal) {
+  constructor(name: string, code: Literal | `0x${number}`) {
     super(
       name,
       `#define table {

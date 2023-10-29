@@ -2,11 +2,17 @@ import {Declarable} from '../declarables/declarable';
 import {Primitive} from '../types';
 import {Label} from '..';
 
-/** A [function interface](https://docs.huff.sh/get-started/huff-by-example/#defining-your-interface). */
+/** A [function interface](https://docs.huff.sh/get-started/huff-by-example/#defining-your-interface).
+ *
+ * @param name name of the function interface
+ * @param args (optional) function parameters
+ * @param returns (optional) returned values
+ * @param type (optional) function type, defaults to `nonpayable`
+ */
 export class FunctionABI extends Declarable {
   readonly args: Primitive[];
   readonly returns: Primitive[];
-  readonly functype: 'view' | 'payable' | 'pure' | 'nonpayable' | null;
+  readonly functype: 'view' | 'payable' | 'pure' | 'nonpayable';
 
   constructor(
     name: string,
@@ -18,7 +24,7 @@ export class FunctionABI extends Declarable {
   ) {
     super(name, 'function');
     this.args = params.args || [];
-    this.functype = params.type || null;
+    this.functype = params.type || 'nonpayable';
     this.returns = params.returns || [];
   }
 

@@ -2,7 +2,10 @@ import {writeFile} from 'fs/promises';
 import {Compilable, Constructor, Main} from '../compilables';
 import {Declaration} from '../declarables';
 
-/** A Huff program. */
+/** A Huff program.
+ *
+ * @param entry a macro / test / function; or an array of those
+ */
 export class Program {
   entries: Compilable[];
   code: string | undefined;

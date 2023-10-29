@@ -45,4 +45,4 @@ export type OpCode =
 // Terminations
 'return' | 'revert' | 'invalid' | 'selfdestruct';
 
-// Challenge: shortest way to represent the opcodes in type system?
+// Type-Golfing Challenge: shortest way to represent the opcodes in type system?

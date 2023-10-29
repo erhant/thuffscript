@@ -1,7 +1,11 @@
 import {Compilable} from './compilable';
 import {Literal} from '../types';
 
-/** A [test](https://docs.huff.sh/get-started/huff-by-example/#huff-tests). */
+/** A [test](https://docs.huff.sh/get-started/huff-by-example/#huff-tests).
+ *
+ * @param name name of the test
+ * @param decorators `calldata` and `value` for this test
+ */
 export class Test extends Compilable {
   constructor(
     name: string,

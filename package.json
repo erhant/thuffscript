@@ -77,5 +77,11 @@
     "ignorePatterns": [
       "build"
     ]
-  }
+  },
+  "keywords": [
+    "huff",
+    "solidity",
+    "ethereum",
+    "types"
+  ]
 }

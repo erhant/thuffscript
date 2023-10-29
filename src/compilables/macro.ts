@@ -13,6 +13,12 @@ import {Literal} from '../types';
  *    // instructions
  * )
  * ```
+ *
+ * @param name name of the macro
+ * @param args (optional) array of argument names; if provided, TypeScript will auto-complete
+ * arguments as `<arg-name>` within the `body` function
+ * @param takes (optional) number of stack items taken by this macro
+ * @param returns (optional) number of stack items returned by this macro
  */
 export class Macro<A extends string = string> extends Compilable<A> {
   readonly args: A[];
@@ -75,7 +81,7 @@ export class Macro<A extends string = string> extends Compilable<A> {
 /**
  * A call to a macro with given arguments.
  *
- * This should never be called directly, but instead accessed via `Macro`.
+ * This should never be called directly, but instead accessed via `Macro.call`.
  */
 export class MacroCall {
   readonly sortedKeys: string[];
@@ -95,7 +101,7 @@ export class MacroCall {
 /**
  * Get size of a macro.
  *
- * This should never be called directly, but instead accessed via `Macro`.
+ * This should never be called directly, but instead accessed via `Macro.size`.
  */
 export class MacroSize {
   constructor(readonly macro: Macro) {}

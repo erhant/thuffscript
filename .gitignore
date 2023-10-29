@@ -176,3 +176,7 @@ build
 
 .vscode
 tsconfig.tsbuildinfo
+
+# Temporary Huff
+
+Temp.huff

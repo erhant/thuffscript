@@ -1,7 +1,11 @@
 import {Declarable} from '../declarables/declarable';
 import {Primitive} from '../types';
 
-/** A [custom error](https://docs.huff.sh/get-started/huff-by-example/#custom-errors). */
+/** A [custom error](https://docs.huff.sh/get-started/huff-by-example/#custom-errors).
+ *
+ * @param name name of the custom error
+ * @param args (optional) error parameters
+ */
 export class ErrorABI extends Declarable {
   readonly args: Primitive[];
 

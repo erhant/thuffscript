@@ -20,7 +20,11 @@ export abstract class Compilable<A extends string = string> {
   ops: Statements<A>[] = [];
   isCompiled = false;
 
-  constructor(readonly name: string) {}
+  constructor(readonly name: string) {
+    if (name === '') {
+      throw new Error('name cant be empty');
+    }
+  }
 
   // TODO: doc
   body(...ops: Statements<A>[]) {

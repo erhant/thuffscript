@@ -1,4 +1,7 @@
-/** A [jump label](https://docs.huff.sh/get-started/huff-by-example/#jump-labels). */
+/** A [jump label](https://docs.huff.sh/get-started/huff-by-example/#jump-labels).
+ *
+ * @param name name of the label
+ */
 export class Label {
   readonly name: string;
   readonly src: JumpSource;

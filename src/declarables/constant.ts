@@ -1,7 +1,13 @@
 import {Declarable} from '../declarables/declarable';
 import type {Literal} from '../types';
 
-/** A [constant](https://docs.huff.sh/get-started/huff-by-example/#constants). */
+/** A [constant](https://docs.huff.sh/get-started/huff-by-example/#constants).
+ *
+ * If you are looking for the `FREE_STORAGE_POINTER()` constant, refer to `FreeStoragePointer`.
+ *
+ * @param name name of the constant
+ * @param value a literal
+ */
 export class Constant extends Declarable {
   readonly value: Literal;
 
