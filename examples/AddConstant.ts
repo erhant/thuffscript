@@ -1,4 +1,4 @@
-import {FunctionABI, Label, Macro, Main, Program} from '../src';
+import {FunctionABI, Macro, Main, Program} from '../src';
 
 const addConstant = new FunctionABI('addConstant', {args: ['uint'], returns: ['uint'], type: 'view'});
 
