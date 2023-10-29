@@ -16,6 +16,9 @@ jobs:
       - name: Install packages
         run: bun install
 
+      - name: Check types
+        run: bun run check
+
       - name: Linting & Formatting
         run: bun run lint && bun run format
 

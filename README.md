@@ -4,16 +4,15 @@
   </h1>
 
   <div align="center">
-      <a href="https://opensource.org/licenses/MIT" target="_blank">
-          <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg">
-      </a>
       <a href="https://www.npmjs.com/package/thuffscript" target="_blank">
         <img alt="NPM" src="https://img.shields.io/npm/v/thuffscript?logo=npm&color=CB3837">
-    </a>
+      </a>
       <a href="./.github/workflows/tests.yml" target="_blank">
           <img alt="Workflow: Tests" src="https://github.com/erhant/thuffscript/actions/workflows/tests.yaml/badge.svg?branch=main">
       </a>
-      
+      <a href="https://opensource.org/licenses/MIT" target="_blank">
+          <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg">
+      </a>
   </div>
 
   <p align="center">

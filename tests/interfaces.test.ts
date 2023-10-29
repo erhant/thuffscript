@@ -82,7 +82,8 @@ describe('function', () => {
   });
 
   test('no function type', () => {
+    // defaults to `nonpayable`
     const func = new FunctionABI('notype', {args: ['uint16'], returns: ['uint32']});
-    expect(func.declare().decl).toBe('#define function notype(uint16) returns (uint32)');
+    expect(func.declare().decl).toBe('#define function notype(uint16) nonpayable returns (uint32)');
   });
 });
