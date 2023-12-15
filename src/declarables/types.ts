@@ -1,4 +1,4 @@
-import {Constant, ErrorABI, EventABI, FreeStoragePointer, FunctionABI, Table} from '.';
+import type {Constant, ErrorABI, EventABI, FreeStoragePointer, FunctionABI, Table} from '.';
 
 export type Declaration = {
   type: 'function' | 'constant' | 'error' | 'event' | 'table';
