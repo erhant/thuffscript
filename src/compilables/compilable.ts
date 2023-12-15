@@ -1,7 +1,7 @@
 import {TableSize, TableStart, Declarable, Declarables} from '../declarables';
 import {JumpSource, JumpDest} from '../labels';
 import {MacroCall, MacroSize, Macro} from '.';
-import {Statements} from '../types';
+import type {Statements} from '../types';
 
 /** A compilable Huff expression.
  *

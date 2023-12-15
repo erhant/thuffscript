@@ -1,14 +1,13 @@
 {
   "name": "thuffscript",
   "author": "erhant",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "scripts": {
     "eg:AddConstant": "bun run ./examples/AddConstant.ts",
     "eg:Address": "bun run ./examples/Address.ts",
     "eg:SimpleStore": "bun run ./examples/SimpleStore.ts",
-    "build:bun": "bun build ./src/index.ts --outdir ./dist --target node",
-    "build": "bunx parcel build",
+    "build": "bunx parcel build ",
     "prebuild": "bun run format && bun run lint",
     "huff": "huffc -b",
     "format": "prettier --check '**/*.ts'",
@@ -28,13 +27,17 @@
   "targets": {
     "cjs": {
       "outputFormat": "commonjs",
-      "isLibrary": true,
-      "context": "node"
+      "isLibrary": false,
+      "context": "node",
+      "scopeHoist": false,
+      "includeNodeModules": false
     },
     "mjs": {
       "outputFormat": "esmodule",
-      "isLibrary": true,
-      "context": "node"
+      "isLibrary": false,
+      "context": "node",
+      "scopeHoist": false,
+      "includeNodeModules": false
     }
   },
   "files": [
@@ -82,6 +85,6 @@
     "huff",
     "solidity",
     "ethereum",
-    "types"
+    "typescript"
   ]
 }

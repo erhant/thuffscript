@@ -1,5 +1,5 @@
 import {Declarable} from '../declarables/declarable';
-import {Primitive} from '../types';
+import type {Primitive} from '../types';
 import {Label} from '..';
 
 /** A [function interface](https://docs.huff.sh/get-started/huff-by-example/#defining-your-interface).

@@ -1,5 +1,5 @@
 import {Compilable} from './compilable';
-import {Literal} from '../types';
+import type {Literal} from '../types';
 
 /** A [test](https://docs.huff.sh/get-started/huff-by-example/#huff-tests).
  *

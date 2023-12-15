@@ -1,5 +1,5 @@
 import {Compilable} from './compilable';
-import {Literal} from '../types';
+import type {Literal} from '../types';
 
 /** A [macro](https://docs.huff.sh/get-started/huff-by-example/#macros).
  *

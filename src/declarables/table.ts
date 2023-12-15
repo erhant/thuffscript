@@ -1,6 +1,6 @@
 import {Declarable} from '../declarables/declarable';
 import {Label} from '../labels';
-import {Literal} from '../types';
+import type {Literal} from '../types';
 
 // TODO: does table really extend `Declarable`? Or, is it unique like `jump label`?
 

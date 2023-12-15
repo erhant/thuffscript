@@ -1,3 +1,3 @@
-export * from './opcodes';
-export * from './primitives';
-export * from './statement';
+export type * from './opcodes';
+export type * from './primitives';
+export type * from './statement';
