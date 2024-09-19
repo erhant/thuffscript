@@ -20,6 +20,10 @@
   </p>
 </p>
 
+> [!CAUTION]
+>
+> With [Huff](https://github.com/huff-language/huff-rs) being archived, we've put this to sleep as well. 💤
+
 ## Install
 
 Install the package via:
